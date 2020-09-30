@@ -1,0 +1,55 @@
+The area of machine learning systems comprises a rapidly expanding body of work, a testament to the importance of the field and the sheer quantity of topics it covers.
+While the core objectives of machine learning systems research can often be summarized with a few key metrics pertaining to model quality, algorithmic efficiency, and computational costs, the methods for achieving these objectives are diverse and have spawned numerous subfields.
+Here, we cover the most relevant related work for machine learning systems optimizations.
+
+
+Improving the the computational efficiency of neural network inference (both with and without retraining) is a rapidly evolving field of research due to the high computational costs associated with modern convolutional architectures.
+Frequently, these approaches introduce a quality--computational cost or accuracy--computational tradeoff space.
+Beyond resolution, architecture agnostic approaches include exploiting quantization~\cite{rastegari2016xnor, zhou2016dorefa, fromm2020riptide}, weight pruning~\cite{ji2018tetris, frankle2018lottery}, input masking~\cite{yang2018energy}, temporal redundancy~\cite{buckler2018eva2}, model cascades~\cite{shen2017fast}, and alternative numerical representations~\cite{kim2016dynamic, lee2017energy, kalamkar2019study}.
+
+\paragraph{Quantization}
+Neural network quantization can take many forms, ranging from truncation (removing bits of precision) under existing representation schemes to alternative representations.
+Regardless of the approach, the primary aim of quantization is to improve the efficiency of model inference by reducing the complexity of the hardware or the number of software operations required due to the lower bitwidth of operands.
+Another important form of savings from quantization comes in the form of the reduction in memory requirements, particularly for the intermediate activatations and weights of a model.
+
+Beyond the method by which numerical representations can be quantized, much of quantization research focuses on how quantization can be performed while minimizing the loss in model quality.
+Approaches include finetuning the model after quantization and specializing the extent of quantization at a per-channel or per-layer basis.
+Finally, we note the importance of matching quantization schemes to hardware/software friendly approaches in realizing theoretical performance gains in real applications.
+
+\paragraph{Neural Networks and Image Resolution}
+The issue of scale dependence is an area of active research with model architecture~\cite{DBLP:journals/corr/KanazawaSJ14}, finetuning~\cite{touvron2019fixing}, data augmentation~\cite{hoffer2019mix}, and equivariance-based approaches~\cite{sosnovik2019scaleequivariant} being used.
+While we present one of many possible motivations for multi-resolution models and one possible strategy for addressing the problem of scale dependence in vision models, the ability for an inference stack to flexibly switch between different image resolutions is useful.
+Even in the ideal case of fully scale-equivariant models, image resolution remains a tunable hyperparameter dictating the amount of information or fine-grained detail in image in addition to the capacity of feature maps.
+The overall approach of mapping image data to different resolutions and tuning resolution specific kernels is orthogonal to the motivation behind multi-resolution support.
+
+
+\paragraph{Optimizing Neural Network Kernels}
+An important requirement of efficient multi-resolution or scale support is the availability of high performance kernel implementations for each combination of resolution, model, and hardware.
+As the number of such possible combinations grows very quickly, we rely on work in automatic deep learning kernel optimizations ~\cite{ragan2013halide, chen2018tvm, zheng2020ansor, cowan2020automatic} to generate these kernels with minimal programmer effort.
+
+\paragraph{Optimizing Neural Network Storage}
+Specializing storage with domain-specific knowledge for either increased capacity and performance is also an active area research~\cite{sampson2014approximate, jevdjic2017approximate, mazumdar2019vignette}.
+Prior work has touched on cases where the relative importance of image data (e.g., critical format bits vs. noisy coefficient values) can be matched to storage at different levels of reliability~\cite{guo2016high, jevdjic2017approximate}.
+
+\paragraph{Mixture of Experts Models}
+We draw inspiration from Mixture-of-Experts (MoE) approaches in machine learning~\cite{jacobs1991adaptive, shazeer2017outrageously, yang2019soft, lepikhin2020gshard}, where model architectures use a weighted combination of ``experts'' to increase model capacity.
+Here, our two-model pipeline can be considered a modified MoE that uses weight-sharing, with the different experts being the different resolution variations of the backbone model.
+While prior work has enforced sparse-weighting~\cite{shazeer2017outrageously} or soft-conditioning~\cite{yang2019soft} to efficiently implement the MoE, we use explicit control flow and train the scale and backbone models on separate objectives.
+
+
+\paragraph{Storing Many Images}
+%Efficient image storage is an active field of research. 
+The need to efficiently store many images has become apparent with the overwhelming growth of social media services that often host and serve images to a wide variety of users and devices.
+
+Recent work has aimed to reduce overheads due to metadata for small files~\cite{beaver2010finding} as well as develop SSD friendly caching algorithms~\cite{tang2015ripq}. 
+Related work has also investigated the quality--density trade-off for approximate storage, showing that matching the importance of image data with the reliability of storage can improve storage efficiency~\cite{guo2016high}. 
+Using custom progressive JPEG limits metadata overheads when only storing a single version of each image and can improve caching behavior as different versions of an image share data.
+Grouping scans of progressive JPEG is related to ordering image data from most to least important, but the binary format used here is not amenable to storage on approximate storage media.
+
+Progressive JPEG images can also be partially deleted gracefully by discarding high frequency data first---improving storage elasticity.
+The concept of motifs: descriptions of computation needed to reconstruct a file discussed in~\cite{183605, carillon} is implicitly implemented by a dynamic resizing storage scheme as only the highest quality version of an image is stored while lower quality versions are implicitly defined by motifs.
+
+Dynamic resizing has precursors in image processing systems such as zimg~\cite{zimg} that allow clients to upload and request images with added operations such as cropping and scaling. 
+To the best of our knowledge, these systems do not vary the amount of data read based on quality via a progressive frequency domain encoding.
+Dynamic resizing has also been used by Flickr~\cite{flickr} and Facebook~\cite{huang2013analysis}: in addition to storing multiple versions of each photo, Facebook incorporates ``Resizers'' when the requested version requires additional processing.
+Finally, progressive JPEG has been recently used by Facebook~\cite{fasterfacebook} to reduce data consumption and speed up the apparent loading of images on the client side; the latter is achieved by rendering an acceptable quality scan before all scans have been transmitted. However, this approach does not involve dynamic resizing or customizing progressive JPEG\@.

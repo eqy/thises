@@ -1,0 +1,9 @@
+Computer vision systems implicitly depend on a variety of parameter choices affecting metrics such as model accuracy, inference latency, and storage bandwidth utilization.
+Often, these choices are made in isolation or statically, when the ideal choices may require joint tuning or be data-dependent.
+
+Modern computer vision pipelines, built on neural network models, are highly sensitive to the distribution of data seen at training time.
+We study relationship between this data distribution as mediated by the choice of data augmentations at training time and the internal representation learned by neural networks.
+
+From this understanding of what neural network representations encode, we propose tuning several parameter choices in tandem.
+Together, these parameters determine the neural network's computational cost, latency, accuracy, and storage bandwidth use.
+We describe the mechanisms by which 
