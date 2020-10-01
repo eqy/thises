@@ -1,0 +1,108 @@
+\section{Approach}
+In order to resize a baseline JPEG image to a reduced resolution, the full image must be read.
+We repurpose progressive JPEG, reading only the scans necessary for a specific image quality for the resized image.
+To further reduce the amount of data that must be read, we tune progressive JPEG parameters to match predefined image resolutions.
+We specify resolutions relative to source images (e.g. 10\% of a
+500$\times$500 image is a 50$\times$50 image).
+
+\subsection{Defining Image Quality}
+\label{Defining Image Quality}
+Using progressive JPEG and dynamic resizing in place of static baseline images requires an image quality metric and quality threshold to determine when have we read enough image data.
+For each resolution, we define image quality using the peak signal-to-noise ratio (PSNR). 
+To compute the PSNR, the reduced resolution image (which may be lossier) is compared against a source image scaled to the same resolution.
+For our experiments, we choose a PSNR threshold of 32 dB as the cutoff where no additional image data (or scans) of a progressive JPEG image needs to be read.
+Our technique of customizing progressive JPEG is orthogonal to the choice of quality metric and threshold, but higher quality thresholds will reduce savings.
+
+\subsection{Tuning Progressive JPEG Encoding}
+We used the \texttt{jpegtran}~\cite{independent2014libjpeg} transcoder, %, which documents custom scan parameters in \texttt{wizard.txt} file. %cite?
+ which allows the groupings of frequency coefficients and their successive approximations in scans to be customized.
+%But how should they be customized?
+We implement a greedy algorithm that enumerates groupings of coefficients (scan configurations) and chooses a configuration based on the resulting PSNR value.
+Configurations are enumerated by adding coefficient approximations until the PSNR target is met; this process is repeated for all predefined resolutions.
+
+The algorithm is characterized by the following pseudocode which finds the next coefficient approximation to include; some details such as color channels are omitted.
+
+%\begin{figure}
+%\includegraphics[width=0.5\textwidth]{figures/flow.pdf}
+%\end{figure}
+\begin{algorithm}
+\begin{footnotesize}
+\begin{algorithmic}
+\State best\_psnr = 0;
+\State best\_coeff = None;
+\For{coeff $\in (0, \text{max\_coeff(config)}+\text{c\_depth})$}
+    \If {approx[coeff] = 0}
+    \State continue;
+    \EndIf
+    \State //approx[] is initialized to a\_depth
+    \State temp\_approx = approx[coeff] - 1;
+    \State temp\_config = config + (coeff, temp\_approx);
+    \State psnr = calc\_psnr(source\_image, temp\_config);
+    \If {psnr $>$ best\_psnr}
+    \State best\_coeff = (coeff, temp\_approx);
+    \State best\_psnr = psnr;
+    \EndIf
+\EndFor
+\State \Return best\_coeff;
+\end{algorithmic} 
+\end{footnotesize}
+\end{algorithm}
+%\begin{footnotesize}
+%\begin{verbatim}
+%def find_next_best_coeff(cur_config,...,source_image):
+%    cur_best_psnr = 0
+%    cur_best_cf = None
+%    for cf in range(0, cur_max_cf + c_depth):
+%        #cur_approx[] is initialized to a_depth
+%        #for all coefficients
+%        if cur_approx[cf] == 0:
+%            continue
+%        approx = cur_approx[cf] - 1
+%        cur_config = config + (cf, approx)
+%        cur_psnr = calc_psnr(source_image, cur_config)
+%        if cur_psnr > cur_best_psnr:
+%            cur_best_cf = (cf, approx)
+%            cur_best_psnr = cur_psnr
+%    return (cf, approx)
+%\end{verbatim}
+%\end{footnotesize}
+%The algorithm proceeds as follows: starting from an initial configuration of scans, the algorithm enumerates every scan that has one additional coefficient approximation.
+%This enumeration is constrained by a \emph{coefficient depth} parameter, which specifies the number of coefficients past the current highest frequency coefficient that the algorithm considers as well as a \emph{approximation depth} parameter, which specifies the maximum approximation (minimum precision) at which a coefficient can be included in a scan.
+%
+We tune the \emph{coefficient depth} (\texttt{c\_depth}) parameter used by the greedy algorithm, as it can reduce the search time by pruning the enumerated configurations.
+%A reasonably large \emph{coefficient depth} value should not prune away good scan configurations as lower frequency coefficients are likely to improve image quality the most.
+We find that reducing this parameter leads to more space-efficient configurations, perhaps by pruning configurations that are locally optimal (in terms of PSNR) but inefficient.
+
+%When the PSNR target (32 dB in our experiments) has been met, the process concludes by adding missing coefficients (and their approximations) needed to losslessly reproduce the source JPEG image.
+%If at this stage too many scans are required, the process is restarted with a reduced maximum \emph{approximation depth}.
+
+%\paragraph{Merging Scans}
+
+An artifact of the \texttt{jpegtran} encoder is that it is limited to at most 100 scans in a given image.
+This limit also effectively constrains the maximum \emph{approximation depth} (\texttt{a\_depth}) parameter for images where more scans are needed for approximation refinements. 
+However, to our benefit, the encoder also supports specifying multiple frequency coefficients (within the same color channel) that share the same approximation level in a single scan.
+%our current encoding scheme requires a coefficient initially sent with four bits omitted be included in five separate scans if no image data is to be lost with all scans loaded. 
+%Because the different configurations can be chosen for different images, a \emph{approximation depth} value that may work for one image may fail for another image because too many scans are required to reproduce the original image all full precision.
+This feature allows us to work around the 100 scan limit in many cases; we implement a simple algorithm that identifies the longest intervals of coefficients that share approximation levels and merges these coefficients into single scans.
+``Merging'' can also be done with the first (DC) coefficients across channels.
+Merging allows us to encode images using configurations that would otherwise exceed the 100 scan limit of the encoder.
+Still, when this limit is exceeded, we reduce the maximum \emph{approximation depth} used by the greedy algorithm.
+%, as a scan is needed for each level of refinement beneath full precision.
+
+
+\subsection{Proposed Read-Write Process}
+We envision a read/write scheme~(\autoref{fig:sketch}) where, at write time, files are losslessly transcoded using a custom scan configuration as they are added to the system.
+%This write process also produces a mapping of resolutions to byte offsets in the file that represent how much data needs to be read for each resolution.
+At read time, only the necessary scans are read before the resulting image is transcoded to baseline JPEG\@.
+The mapping between the requested resolution and how many scans to read (offset within the file) is a result of the custom progressive JPEG configuration process.
+
+\begin{figure}
+\includegraphics[width=\textwidth]{storage_figures/sketch.pdf}
+\caption{Sketch of a dynamic resizing scheme using custom progressive JPEG\@. 
+Given an input image and predefined target resolutions (a), a suitable scan configuration is found.
+This process produces a mapping (b) of resolutions to scans (file offsets in bytes).
+Given a requested image and resolution (c), the necessary scans are read and the image transcoded. 
+}
+\label{fig:sketch}
+\end{figure}
+%Consider mentioning edge case: scans are not merged at the edge of PSNR threshold boundary

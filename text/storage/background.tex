@@ -1,0 +1,23 @@
+\section{Background: Progressive JPEG}
+\begin{figure}[tb]
+\begin{center}
+\includegraphics[width=\textwidth]{storage_figures/img_encoding.pdf}
+\caption{Sketch of Progressive JPEG Encoding: 1. Images are divided into
+8$\times$8 macroblocks.
+2. Intensity values are transformed to the frequency-domain using a DCT\@. Red arrows
+indicate the low to high frequency order of coefficients. 3. Highlighted
+regions denote scans.}
+\label{fig:background}
+\end{center}
+\end{figure}
+
+The progressive JPEG standard was originally designed to allow partially transmitted images to be previewed~\cite{wallace1992jpeg}.
+Progressive JPEG works by exploiting the fact that partitioning image data in the frequency domain from low to high frequency roughly corresponds to partitioning image data from coarse to fine details.
+By initially decoding only low frequency data, a preview can be rendered with an incomplete image file.
+
+As with baseline JPEG images, progressive JPEG encoding involves transforming image data to the frequency domain with a discrete cosine transform (DCT). 
+In the frequency domain, intensity values become frequency coefficients; in the case of JPEG, there are 64 coefficients for each $8\times 8$ pixel region.
+Progressive JPEG partitions frequency coefficients into groups called scans. \autoref{fig:background} shows a sketch of the progressive JPEG encode process and partitioning of scans.
+A single scan can contain a single coefficient, an approximation of a single
+coefficient, multiple coefficients, or approximations of multiple coefficients; the fundamental property is that scans contain refinements of image data.
+Only the first scan is necessary to display a low quality image preview.

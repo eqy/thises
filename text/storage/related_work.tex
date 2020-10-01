@@ -1,0 +1,15 @@
+\section{Related Work}
+\label{sec: related work}
+Efficient image storage is an active field of research. 
+Recent work has aimed to reduce overheads due to metadata for small files~\cite{beaver2010finding} as well as develop SSD friendly caching algorithms~\cite{tang2015ripq}. 
+Related work has also investigated the quality--density trade-off for approximate storage, showing that matching the importance of image data with the reliability of storage can improve storage efficiency~\cite{guo2016high}. 
+Using custom progressive JPEG limits metadata overheads when only storing a single version of each image and can improve caching behavior as different versions of an image share data.
+Grouping scans of progressive JPEG is related to ordering image data from most to least important, but the binary format used here is not amenable to storage on approximate storage media.
+
+Progressive JPEG images can also be partially deleted gracefully by discarding high frequency data first---improving storage elasticity.
+The concept of motifs: descriptions of computation needed to reconstruct a file discussed in~\cite{183605, carillon} is implicitly implemented by a dynamic resizing storage scheme as only the highest quality version of an image is stored while lower quality versions are implicitly defined by motifs.
+
+Dynamic resizing has precursors in image processing systems such as zimg~\cite{zimg} that allow clients to upload and request images with added operations such as cropping and scaling. 
+To the best of our knowledge, these systems do not vary the amount of data read based on quality via a progressive frequency domain encoding.
+Dynamic resizing has also been used by Flickr~\cite{flickr} and Facebook~\cite{huang2013analysis}: in addition to storing multiple versions of each photo, Facebook incorporates ``Resizers'' when the requested version requires additional processing.
+Finally, progressive JPEG has been recently used by Facebook~\cite{fasterfacebook} to reduce data consumption and speed up the apparent loading of images on the client side; the latter is achieved by rendering an acceptable quality scan before all scans have been transmitted. However, this approach does not involve dynamic resizing or customizing progressive JPEG\@.

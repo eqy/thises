@@ -1,0 +1,24 @@
+\section{Limitations and Future Work}
+%\subsection{Limitations}
+A limitation of our current implementation is the cost of evaluating custom scan configurations.
+Our na\"{i}ve implementation takes days to process 24,988 images on 8 cluster nodes (12 cores/12 threads per node) with Westmere-class CPUs. 
+We suspect that this time can drastically reduced without sacrificing significant bandwidth savings by aggressively pruning the search space or applying machine learning techniques to choose scan configurations.
+Note that while the customization process for progressive JPEG is currently expensive, it only needs to be performed once, at write time. 
+
+The PSNR metric is limited in its relevance to perceived visual quality~\cite{wang2002no}.
+We often found that the PSNR of higher resolution resizes was higher than that of lower resolution resizes even with less image data read---this issue may be mitigated with conservative PSNR thresholds.
+To the best of our knowledge, there is no standard, widely used method of computing the image quality of a resized image derived from a source image.
+%Ideally, an image quality metric would not describe the similarity or difference of two images but be computable without a reference image.
+%Such a scheme would resemble a typical use case more closely as users of an image hosting service do not need a reference image to evaluate image quality.
+
+Finally, an issue when using progressive JPEG for dynamic resizing is the \emph{minimum} resolution of the resized images.
+Progressive JPEG is less efficient in terms of read bandwidth for resizes smaller than 10\% of the source image, which may limit savings when the source images are much higher in resolution than their resized versions.
+This threshold is due to JPEG's use of $8\times8$ macroblocks: even a single frequency coefficient represents at least $\frac{1}{64}$ of the total image data.
+Even when approximations are used, this approach may require more read bandwidth than pre-resized images.
+Still, using progressive JPEG should be more space-efficient than baseline JPEG for dynamic resizing.
+
+\paragraph{Future Work}
+We expect that a solution to reduce the cost of enumerating custom JPEG scan configurations will be to prune the search space to a much smaller subset of likely ``good'' configurations.
+It may be possible to obtain comparable results by only trying a few custom scan
+configurations per image---with this subset being determined by identifying the best configurations when na\"{i}vely re-encoding a larger dataset of images.
+Along these lines, even choosing from a larger pool of configurations may be tractable if a machine learning model is applied to each image to choose the best configuration.

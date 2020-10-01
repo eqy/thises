@@ -469,7 +469,6 @@ and Rowstron, Anthony},
   year={2008}
 }
 
-
 @inproceedings{wang2002no,
   title={No-reference perceptual quality assessment of {JPEG} compressed images},
   author={Wang, Zhou and Sheikh, Hamid R and Bovik, Alan C},
@@ -477,4 +476,382 @@ and Rowstron, Anthony},
   volume={1},
   year={2002},
   organization={IEEE}
+}
+
+@InProceedings{pmlr-v97-zhang19a,
+  title =    {Making Convolutional Networks Shift-Invariant Again},
+  author =   {Zhang, Richard},
+  booktitle =    {Proceedings of the 36th International Conference on Machine Learning},
+  pages =    {7324--7334},
+  year =     {2019},
+  editor =   {Chaudhuri, Kamalika and Salakhutdinov, Ruslan},
+  volume =   {97},
+  series =   {Proceedings of Machine Learning Research},
+  address =      {Long Beach, California, USA},
+  month =    {09--15 Jun},
+  publisher =    {PMLR},
+  pdf =      {http://proceedings.mlr.press/v97/zhang19a/zhang19a.pdf},
+  url =      {http://proceedings.mlr.press/v97/zhang19a.html},
+  abstract =     {Modern convolutional networks are not shift-invariant, as small input shifts or translations can cause drastic changes in the output. Commonly used downsampling methods, such as max-pooling, strided-convolution, and average-pooling, ignore the sampling theorem. The well-known signal processing fix is anti-aliasing by low-pass filtering before downsampling. However, simply inserting this module into deep networks leads to performance degradation; as a result, it is seldomly used today. We show that when integrated correctly, it is compatible with existing architectural components, such as max-pooling. The technique is general and can be incorporated across layer types and applications, such as image classification and conditional image generation. In addition to increased shift-invariance, we also observe, surprisingly, that anti-aliasing boosts accuracy in ImageNet classification, across several commonly-used architectures. This indicates that anti-aliasing serves as effective regularization. Our results demonstrate that this classical signal processing technique has been undeservingly overlooked in modern deep networks.}
+}
+
+@ARTICLE{2019arXiv191104252X,
+       author = {{Xie}, Qizhe and {Luong}, Minh-Thang and {Hovy}, Eduard and
+         {Le}, Quoc V.},
+        title = "{Self-training with Noisy Student improves ImageNet classification}",
+      journal = {arXiv e-prints},
+     keywords = {Computer Science - Machine Learning, Computer Science - Computer Vision and Pattern Recognition, Statistics - Machine Learning},
+         year = "2019",
+        month = "Nov",
+          eid = {arXiv:1911.04252},
+        pages = {arXiv:1911.04252},
+archivePrefix = {arXiv},
+       eprint = {1911.04252},
+ primaryClass = {cs.LG},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2019arXiv191104252X},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+@incollection{NIPS2019_9035,
+title = {Fixing the train-test resolution discrepancy},
+author = {Touvron, Hugo and Vedaldi, Andrea and Douze, Matthijs and Jegou, Herve},
+booktitle = {Advances in Neural Information Processing Systems 32},
+editor = {H. Wallach and H. Larochelle and A. Beygelzimer and F. d\textquotesingle Alch\'{e}-Buc and E. Fox and R. Garnett},
+pages = {8250--8260},
+year = {2019},
+publisher = {Curran Associates, Inc.},
+url = {http://papers.nips.cc/paper/9035-fixing-the-train-test-resolution-discrepancy.pdf}
+}
+
+@InProceedings{pmlr-v97-tan19a,
+  title =    {{E}fficient{N}et: Rethinking Model Scaling for Convolutional Neural Networks},
+  author =   {Tan, Mingxing and Le, Quoc},
+  booktitle =    {Proceedings of the 36th International Conference on Machine Learning},
+  pages =    {6105--6114},
+  year =     {2019},
+  editor =   {Chaudhuri, Kamalika and Salakhutdinov, Ruslan},
+  volume =   {97},
+  series =   {Proceedings of Machine Learning Research},
+  address =      {Long Beach, California, USA},
+  month =    {09--15 Jun},
+  publisher =    {PMLR},
+  pdf =      {http://proceedings.mlr.press/v97/tan19a/tan19a.pdf},
+  url =      {http://proceedings.mlr.press/v97/tan19a.html},
+  abstract =     {Convolutional Neural Networks (ConvNets) are commonly developed at a fixed resource budget, and then scaled up for better accuracy if more resources are given. In this paper, we systematically study model scaling and identify that carefully balancing network depth, width, and resolution can lead to better performance. Based on this observation, we propose a new scaling method that uniformly scales all dimensions of depth/width/resolution using a simple yet highly effective compound coefficient. We demonstrate the effectiveness of this method on MobileNets and ResNet. To go even further, we use neural architecture search to design a new baseline network and scale it up to obtain a family of models, called EfficientNets, which achieve much better accuracy and efficiency than previous ConvNets. In particular, our EfficientNet-B7 achieves stateof-the-art 84.4% top-1 / 97.1% top-5 accuracy on ImageNet, while being 8.4x smaller and 6.1x faster on inference than the best existing ConvNet (Huang et al., 2018). Our EfficientNets also transfer well and achieve state-of-the-art accuracy on CIFAR-100 (91.7%), Flower (98.8%), and 3 other transfer learning datasets, with an order of magnitude fewer parameters.}
+}
+
+@inproceedings{real2019regularized,
+  title={Regularized evolution for image classifier architecture search},
+  author={Real, Esteban and Aggarwal, Alok and Huang, Yanping and Le, Quoc V},
+  booktitle={Proceedings of the aaai conference on artificial intelligence},
+  volume={33},
+  pages={4780--4789},
+  year={2019}
+}
+
+@inproceedings{gueguen2018faster,
+  title={Faster neural networks straight from jpeg},
+  author={Gueguen, Lionel and Sergeev, Alex and Kadlec, Ben and Liu, Rosanne and Yosinski, Jason},
+  booktitle={Advances in Neural Information Processing Systems},
+  pages={3933--3944},
+  year={2018}
+}
+
+@InProceedings{Zhou_2016_CVPR,
+author = {Zhou, Bolei and Khosla, Aditya and Lapedriza, Agata and Oliva, Aude and Torralba, Antonio},
+title = {Learning Deep Features for Discriminative Localization},
+booktitle = {The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+month = {June},
+year = {2016}
+}
+
+@inproceedings{islam2019much,
+  title={How much Position Information Do Convolutional Neural Networks Encode?},
+  author={Islam, Md Amirul and Jia, Sen and Bruce, Neil DB},
+  booktitle={International Conference on Learning Representations},
+  year={2019}
+}
+
+@incollection{NIPS2019_8412,
+title = {CondConv: Conditionally Parameterized Convolutions for Efficient Inference},
+author = {Yang, Brandon and Bender, Gabriel and Le, Quoc V and Ngiam, Jiquan},
+booktitle = {Advances in Neural Information Processing Systems 32},
+editor = {H. Wallach and H. Larochelle and A. Beygelzimer and F. d\textquotesingle Alch\'{e}-Buc and E. Fox and R. Garnett},
+pages = {1305--1316},
+year = {2019},
+publisher = {Curran Associates, Inc.},
+url = {http://papers.nips.cc/paper/8412-condconv-conditionally-parameterized-convolutions-for-efficient-inference.pdf}
+}
+
+@inproceedings{chen2009ranking,
+  title={Ranking measures and loss functions in learning to rank},
+  author={Chen, Wei and Liu, Tie-Yan and Lan, Yanyan and Ma, Zhi-Ming and Li, Hang},
+  booktitle={Advances in Neural Information Processing Systems},
+  pages={315--323},
+  year={2009}
+}
+
+@article{zhang2017mixup,
+  title={mixup: Beyond empirical risk minimization},
+  author={Zhang, Hongyi and Cisse, Moustapha and Dauphin, Yann N and Lopez-Paz, David},
+  journal={arXiv preprint arXiv:1710.09412},
+  year={2017}
+}
+
+@inproceedings{yun2019cutmix,
+  title={Cutmix: Regularization strategy to train strong classifiers with localizable features},
+  author={Yun, Sangdoo and Han, Dongyoon and Oh, Seong Joon and Chun, Sanghyuk and Choe, Junsuk and Yoo, Youngjoon},
+  booktitle={Proceedings of the IEEE International Conference on Computer Vision},
+  pages={6023--6032},
+  year={2019}
+}
+
+@inproceedings{ciregan2012multi,
+  title={Multi-column deep neural networks for image classification},
+  author={Ciregan, Dan and Meier, Ueli and Schmidhuber, J{\"u}rgen},
+  booktitle={2012 IEEE conference on computer vision and pattern recognition},
+  pages={3642--3649},
+  year={2012},
+  organization={IEEE}
+}
+
+@inproceedings{krizhevsky2012imagenet,
+  title={Imagenet classification with deep convolutional neural networks},
+  author={Krizhevsky, Alex and Sutskever, Ilya and Hinton, Geoffrey E},
+  booktitle={Advances in neural information processing systems},
+  pages={1097--1105},
+  year={2012}
+}
+
+@inproceedings{abadi2016tensorflow,
+  title={Tensorflow: A system for large-scale machine learning},
+  author={Abadi, Mart{\'\i}n and Barham, Paul and Chen, Jianmin and Chen, Zhifeng and Davis, Andy and Dean, Jeffrey and Devin, Matthieu and Ghemawat, Sanjay and Irving, Geoffrey and Isard, Michael and others},
+  booktitle={12th $\{$USENIX$\}$ Symposium on Operating Systems Design and Implementation ($\{$OSDI$\}$ 16)},
+  pages={265--283},
+  year={2016}
+}
+@article{zoph2016neural,
+  title={Neural architecture search with reinforcement learning},
+  author={Zoph, Barret and Le, Quoc V},
+  journal={arXiv preprint arXiv:1611.01578},
+  year={2016}
+}
+
+@inproceedings{cubuk2019autoaugment,
+  title={Autoaugment: Learning augmentation strategies from data},
+  author={Cubuk, Ekin D and Zoph, Barret and Mane, Dandelion and Vasudevan, Vijay and Le, Quoc V},
+  booktitle={Proceedings of the IEEE conference on computer vision and pattern recognition},
+  pages={113--123},
+  year={2019}
+}
+
+@article{xie2019adversarial,
+  title={Adversarial Examples Improve Image Recognition},
+  author={Xie, Cihang and Tan, Mingxing and Gong, Boqing and Wang, Jiang and Yuille, Alan and Le, Quoc V},
+  journal={arXiv preprint arXiv:1911.09665},
+  year={2019}
+}
+
+@article{simonyan2013deep,
+  title={Deep inside convolutional networks: Visualising image classification models and saliency maps},
+  author={Simonyan, Karen and Vedaldi, Andrea and Zisserman, Andrew},
+  journal={arXiv preprint arXiv:1312.6034},
+  year={2013}
+}
+
+@article{pereira2009machine,
+  title={Machine learning classifiers and fMRI: a tutorial overview},
+  author={Pereira, Francisco and Mitchell, Tom and Botvinick, Matthew},
+  journal={Neuroimage},
+  volume={45},
+  number={1},
+  pages={S199--S209},
+  year={2009},
+  publisher={Elsevier}
+}
+
+@inproceedings{berthelot2019mixmatch,
+  title={Mixmatch: A holistic approach to semi-supervised learning},
+  author={Berthelot, David and Carlini, Nicholas and Goodfellow, Ian and Papernot, Nicolas and Oliver, Avital and Raffel, Colin A},
+  booktitle={Advances in Neural Information Processing Systems},
+  pages={5050--5060},
+  year={2019}
+}
+
+@article{devries2017improved,
+  title={Improved regularization of convolutional neural networks with cutout},
+  author={DeVries, Terrance and Taylor, Graham W},
+  journal={arXiv preprint arXiv:1708.04552},
+  year={2017}
+}
+
+@InProceedings{Nguyen_2015_CVPR,
+author = {Nguyen, Anh and Yosinski, Jason and Clune, Jeff},
+title = {Deep Neural Networks Are Easily Fooled: High Confidence Predictions for Unrecognizable Images},
+booktitle = {The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+month = {June},
+year = {2015}
+}
+
+@article{goodfellow2014explaining,
+  title={Explaining and harnessing adversarial examples},
+  author={Goodfellow, Ian J and Shlens, Jonathon and Szegedy, Christian},
+  journal={arXiv preprint arXiv:1412.6572},
+  year={2014}
+}
+
+@inproceedings{wong2016understanding,
+  title={Understanding data augmentation for classification: when to warp?},
+  author={Wong, Sebastien C and Gatt, Adam and Stamatescu, Victor and McDonnell, Mark D},
+  booktitle={2016 international conference on digital image computing: techniques and applications (DICTA)},
+  pages={1--6},
+  year={2016},
+  organization={IEEE}
+}
+
+@inproceedings{lin2016visualizing,
+  title={Visualizing and understanding deep texture representations},
+  author={Lin, Tsung-Yu and Maji, Subhransu},
+  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+  pages={2791--2799},
+  year={2016}
+}
+
+@inproceedings{gatys2015texture,
+  title={Texture synthesis using convolutional neural networks},
+  author={Gatys, Leon and Ecker, Alexander S and Bethge, Matthias},
+  booktitle={Advances in neural information processing systems},
+  pages={262--270},
+  year={2015}
+}
+
+@inproceedings{deng2009imagenet,
+  title={Imagenet: A large-scale hierarchical image database},
+  author={Deng, Jia and Dong, Wei and Socher, Richard and Li, Li-Jia and Li, Kai and Fei-Fei, Li},
+  booktitle={2009 IEEE conference on computer vision and pattern recognition},
+  pages={248--255},
+  year={2009},
+  organization={Ieee}
+}
+
+@misc{alex2020radioactive,
+    title={Radioactive data: tracing through training},
+    author={Alexandre Sablayrolles and Matthijs Douze and Cordelia Schmid and Hervé Jégou},
+    year={2020},
+    eprint={2002.00937},
+    archivePrefix={arXiv},
+    primaryClass={stat.ML}
+}
+
+@article{erhan2009visualizing,
+  title={Visualizing higher-layer features of a deep network},
+  author={Erhan, Dumitru and Bengio, Yoshua and Courville, Aaron and Vincent, Pascal},
+  year={2009}
+}
+
+@inproceedings{he2016deep,
+  title={Deep residual learning for image recognition},
+  author={He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian},
+  booktitle={Proceedings of the IEEE conference on computer vision and pattern recognition},
+  pages={770--778},
+  year={2016}
+}
+
+@article{lipton2018mythos,
+  title={The mythos of model interpretability},
+  author={Lipton, Zachary C},
+  journal={Queue},
+  volume={16},
+  number={3},
+  pages={31--57},
+  year={2018},
+  publisher={ACM New York, NY, USA}
+}
+
+@inproceedings{selvaraju2017grad,
+  title={Grad-cam: Visual explanations from deep networks via gradient-based localization},
+  author={Selvaraju, Ramprasaath R and Cogswell, Michael and Das, Abhishek and Vedantam, Ramakrishna and Parikh, Devi and Batra, Dhruv},
+  booktitle={Proceedings of the IEEE international conference on computer vision},
+  pages={618--626},
+  year={2017}
+}
+
+@inproceedings{zeiler2014visualizing,
+  title={Visualizing and understanding convolutional networks},
+  author={Zeiler, Matthew D and Fergus, Rob},
+  booktitle={European conference on computer vision},
+  pages={818--833},
+  year={2014},
+  organization={Springer}
+}
+
+@article{zhang2016understanding,
+  title={Understanding deep learning requires rethinking generalization},
+  author={Zhang, Chiyuan and Bengio, Samy and Hardt, Moritz and Recht, Benjamin and Vinyals, Oriol},
+  journal={arXiv preprint arXiv:1611.03530},
+  year={2016}
+}
+
+@inproceedings{cohen2016group,
+  title={Group equivariant convolutional networks},
+  author={Cohen, Taco and Welling, Max},
+  booktitle={International conference on machine learning},
+  pages={2990--2999},
+  year={2016}
+}
+
+@article{sosnovik2019scale,
+  title={Scale-equivariant steerable networks},
+  author={Sosnovik, Ivan and Szmaja, Micha{\l} and Smeulders, Arnold},
+  journal={arXiv preprint arXiv:1910.11093},
+  year={2019}
+}
+
+@article{zhu2019scale,
+  title={Scale-Equivariant Neural Networks with Decomposed Convolutional Filters},
+  author={Zhu, Wei and Qiu, Qiang and Calderbank, Robert and Sapiro, Guillermo and Cheng, Xiuyuan},
+  journal={arXiv preprint arXiv:1909.11193},
+  year={2019}
+}
+
+@article{kondor2018generalization,
+  title={On the generalization of equivariance and convolution in neural networks to the action of compact groups},
+  author={Kondor, Risi and Trivedi, Shubhendu},
+  journal={arXiv preprint arXiv:1802.03690},
+  year={2018}
+}
+
+@article{dao2019kernel,
+  title={A kernel theory of modern data augmentation},
+  author={Dao, Tri and Gu, Albert and Ratner, Alexander J and Smith, Virginia and De Sa, Christopher and R{\'e}, Christopher},
+  journal={Proceedings of machine learning research},
+  volume={97},
+  pages={1528},
+  year={2019},
+  publisher={NIH Public Access}
+}
+
+@misc{chen2019grouptheoretic,
+    title={A Group-Theoretic Framework for Data Augmentation},
+    author={Shuxiao Chen and Edgar Dobriban and Jane H Lee},
+    year={2019},
+    eprint={1907.10905},
+    archivePrefix={arXiv},
+    primaryClass={stat.ML}
+}
+
+@article{xu2014scale,
+  title={Scale-invariant convolutional neural networks},
+  author={Xu, Yichong and Xiao, Tianjun and Zhang, Jiaxing and Yang, Kuiyuan and Zhang, Zheng},
+  journal={arXiv preprint arXiv:1411.6369},
+  year={2014}
+}
+
+@misc{kanazawa2014locally,
+    title={Locally Scale-Invariant Convolutional Neural Networks},
+    author={Angjoo Kanazawa and Abhishek Sharma and David Jacobs},
+    year={2014},
+    eprint={1412.5104},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
 }

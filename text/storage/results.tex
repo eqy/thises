@@ -1,0 +1,51 @@
+\section{Results}
+\begin{figure}[tb]
+\includegraphics[width=\textwidth]{storage_figures/size_band.pdf}
+\caption{Storage utilization (left) and read sizes measured by the amount of data read to achieve a PSNR of at least 32 dB (right). %Note that for some of the pre-resized images the PSNR was less than 32dB even when the image was encoded with a quality of 100. 
+Note that the PSNR of the resulting images with each scheme can be different despite this lower-bound: default progressive JPEG overshoots the quality target.
+Overall, dynamic resizing schemes provide similar and substantial storage savings over static resizing.
+Custom progressive JPEG provides the most bandwidth savings (up to $5.8\times$ vs. baseline).
+%Preresized images also reduce read bandwidth with the exception of the 50\% resolution case where they also tended to overshoot the quality target.
+}
+\label{fig:size_band}
+\end{figure}
+
+Overall, we find that dynamic resizing dramatically reduces storage overheads significantly (by 41\%).
+Additionally, using custom progressive JPEG for dynamic resizing yields the most efficient use of storage bandwidth.
+
+\subsection{Storage Capacity}
+Unsurprisingly, storing baseline images along with resized images uses the most storage capacity~(\autoref{fig:size_band}).
+Progressive JPEG is slightly more space-efficient than baseline JPEG~\cite{souders2009even}, though all dynamic resizing approaches are similar in storage utilization.
+Normalized to dynamic baseline JPEG, dynamic custom progressive JPEG incurs 0.3\% storage overhead while dynamic progressive JPEG provides 6.0\% storage savings.
+Custom progressive JPEG likely suffers the small additional overhead due to the increased number of scans.
+%\begin{figure}[tb]
+%\includegraphics[width=0.5\textwidth]{figures/storage_utilization.pdf}
+%\caption{Storage utilization measured by sum of file sizes. 
+%All methods that use dynamic resizing (baseline, custom progressive, default\_progressive) are comparable with precomputed resizing using substantially more storage capacity.}
+%%\label{storage_utilization)
+%\label{fig:storage_utilization}
+%\end{figure}
+
+\subsection{Read Bandwidth}
+We consider the case where the requested resolutions of images are not cached\footnote{If the requested resolutions were already cached, we would expect performance to be identical under each scheme.}.
+We estimate the read bandwidth requirements of each method using the amount of data read necessary to achieve a satisfactory PSNR for all 24,988 images.
+Here, baseline pre-resized images are omitted because their PSNR values were not comparable; pre-resized images should offer competitive if not better bandwidth savings relative to custom progressive JPEG\@.
+%If the requested resolutions were already cached, we would expect each scheme to offer identical performance.
+A substantial portion of read bandwidth can be saved just by using progressive JPEG for dynamic resizing: 59\% for 10\% resolution, with similar improvements for other scales.
+Customizing progressive JPEG improves savings to 83\% for the 10\% resolution case.
+The savings in read bandwidth~(\autoref{fig:size_band}) from custom progressive JPEG can largely be explained as a PSNR--read size trade-off.
+This trade-off is evident for default progressive JPEG, which overshoots the quality target (reading enough scans to meet the quality target results in an average PSNR of around 37-38 dB).
+Interestingly, the progressive schemes seem to require roughly the same amount of read data for all three image scales; this may be a limitation of using PSNR to define image quality.
+%The main caveat with default progressive JPEG is that without knowledge of desired resolutions, the encoder will produce scans that contain too much data or have boundaries misaligned with the requested resolutions.
+%The adaptability of custom progressive JPEG is what allows this method to achieve the target PSNR without wasting read bandwidth by overshooting the target.
+
+\subsection{Compute Overheads}
+For lower resolutions, the decode overheads~(\autoref{fig:overheads}) of custom progressive JPEG may be prohibitive (up to 13.6$\times$ slower than baseline JPEG) on the client side.
+However, the computational cost of decoding a baseline source image is comparable (1.0-2.4$\times$) to that of decoding a custom progressive JPEG image.
+Given this compute--bandwidth trade-off, it makes more sense to transcode custom progressive JPEG images on the server than to decode custom progressive JPEG on the client.
+\begin{figure}[tb]
+\includegraphics[width=\textwidth]{storage_figures/overheads.pdf}
+\caption{Relative overhead of transcoding on the server (left) and relative overhead of decoding custom progressive JPEG on the client (right).}
+\label{fig:overheads}
+%\label{storage_utilization)
+\end{figure}

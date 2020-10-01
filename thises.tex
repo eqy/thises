@@ -9,6 +9,7 @@
 \usepackage[backend=biber,natbib=true,style=numeric-comp,%
             maxbibnames=99,abbreviate=false,backref=true]{biblatex}
 \usepackage{amsmath}
+\DeclareMathOperator{\sgn}{sgn}
 \usepackage{amssymb}
 \usepackage{xspace} % to get the spacing after macros right
 \usepackage{mparhack} % get marginpar right
@@ -32,10 +33,13 @@
 \usepackage{color}
 \usepackage{chngcntr}
 \usepackage[update,prepend]{epstopdf}
-\usepackage[algoruled,linesnumbered,noline]{algorithm2e}
+%\usepackage[algoruled,linesnumbered,noline]{algorithm2e}
 \usepackage{rotating}
 \usepackage[eulerchapternumbers,parts,linedheaders]{classicthesis}
 
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
 
 % crap that we need to work???
 %\usepackage{microtype}
@@ -153,8 +157,10 @@
 \chapter{Related Work}
 \subimport*{text/}{relatedwork}
 \chapter{What do computer vision model features encode?}
+\subimport*{text/}{augmentations}
 
 \chapter{Leveraging Image Resolution for Efficient Storage}
+\subimport*{text/}{storage}
 
 \chapter{Tuning The Tuning of Computer Vision Kernels}
 

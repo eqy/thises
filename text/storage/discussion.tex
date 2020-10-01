@@ -1,0 +1,10 @@
+\section{Discussion}
+We find that customizing progressive JPEG provides a substantial advantage in terms of read size over default progressive JPEG for our quality target.
+One caveat is that customizing progressive JPEG relies on trading image quality for read size; there is no inherent improvement to the JPEG standard.
+Rather, custom progressive JPEG facilitates partitioning images at a fine granularity so that this partitioning matches quality specifications closely. 
+In this sense, default progressive JPEG can be viewed as an lower-bound on the bandwidth savings of custom progressive JPEG: 2.5$\times$ at a 37-38 dB threshold.
+%The potential reduction in read bandwidth achievable using custom progressive JPEG is significant enough that it may make sense to send unresized progressive JPEG scans directly over the network without an intermediate ``dynamic thumbnail generation'' or decode$\rightarrow$encode step.
+Decoding progressive JPEG images is also more computationally expensive (by up to 13.6$\times$) than decoding their baseline counterparts, enough so that it does not make sense to push decoding to the client. 
+Still, decoding progressive JPEG images partially for transcoding on the server is comparable in terms of compute to decoding full baseline images, so transcoding on the server with custom progressive JPEG remains a reasonable approach.
+
+%This advantage is a result of custom progressive JPEG being able to closely match the quality targets given encode-time information about thumbnail sizes; the encode process of default progressive JPEG has no information about subsequent thumbnail access/generation steps.

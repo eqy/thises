@@ -1,0 +1,57 @@
+\section{Evaluation}
+\begin{table}
+\begin{footnotesize}
+\begin{tabular}{|p{3.5cm}|p{3.5cm}|}
+\hline
+\textbf{scheme}&\textbf{stored data}\\
+\hline
+baseline (static)&stores source, pre-resized images\\
+\hline
+baseline (dynamic)&stores source images\\
+\hline
+progressive (dynamic) (ours, na\"ive)&stores source images in progressive format\\
+\hline
+custom progressive (dynamic) (ours, preferred)&stores source images in tuned progressive format\\
+\hline
+\end{tabular}
+\end{footnotesize}
+\caption{
+%The first relies on baseline JPEG, where resized images are precomputed (static) and stored in addition to their source JPEG images.
+%The second relies on baseline JPEG but performs dynamic resizing---no redundant data is stored, and the full source JPEG is read to resize images on the fly. 
+Description of each evaluated scheme.
+The first two schemes represent baselines used by current systems. 
+%The third uses progressive JPEG for dynamic resizing---no redundant data is stored, and a portion of the progressive JPEG is read to resize images on the fly. 
+%The third is one of our proposed schemes, but with a na\"ive use of progressive JPEG. 
+%The fourth and our preferred proposed scheme uses progressive JPEG with custom scan configurations for each image.
+}
+%Resized images are generated on the fly but scans are customized to match predefined resolutions, further reducing read bandwidth. 
+\label{tbl:schemes}
+\end{table}
+We evaluate the storage overheads (capacity, bandwidth) required for the four storage schemes shown in ~\autoref{tbl:schemes}.
+For each approach, we evaluate the storage overheads when three image resolutions in addition to the original may be requested: 10\%, 25\%, and 50\%.
+For our custom progressive JPEG scheme, we also evaluate the compute overheads relative to dynamic resizing with baseline JPEG images.
+This comparison attempts to answer the question of whether it is beneficial to
+offload resizing from the image host to the requesting client---an option not possible with dynamic resizing on baseline images.
+%or to resize on the server side.
+
+
+\subsection{Compute Overheads}
+Many existing JPEG decoders support progressive JPEG and custom progressive JPEG, raising the question of whether progressive JPEG images should be served directly to clients without transcoding to baseline JPEG\@.
+However, decoding progressive JPEG images is more computationally expensive than decoding (equivalent) baseline images~\cite{computation}.
+We therefore consider the computational overheads of two schemes: (1) the preferred scheme where custom progressive JPEG images are transcoded to baseline images on the server side, and (2) where custom progressive JPEG images are served directly to the client, offloading computation from the server.
+%Transcoding on the server can be thought of offloading computation from the client to the server, while decoding custom progressive JPEG on the client can be thought of as offloading computation from the server to the client.
+Offloading transcode (2) is not possible when using baseline images as it would be equivalent to sending the entire source image.
+For server side transcode (1), we calculate the overhead by measuring the time to decode a custom progressive JPEG image versus a full baseline source image for resizing. 
+%Once the images have been decoded, the remaining resize and re-encode cost should be identical. %---we do not measure these.
+For client side decode (2), we calculate overhead by measuring the time it takes to decode a custom progressive JPEG versus a previously resized baseline image.
+%Likewise, as different devices may perform different additional resizing of images to compensate for screen size and pixel density, we do not measure the cost of operations past decoding in the second case.
+
+\subsection{Dataset and Encoder}
+We perform our evaluation with the MIRFLICKR~\cite{huiskes08} dataset, using 24,988 JPEG images with an average resolution of 462$\times$399.
+We use the original images as the source baseline JPEG images and the ImageMagick \texttt{convert}~\cite{imagemagick2008imagemagick} tool to generate resized baseline images. %MAYBE cite
+For progressive JPEG images, we use \texttt{jpegtran} with the \texttt{-optimize} and \texttt{-progressive} flags. 
+For progressive JPEG images with custom scan configurations, we use \texttt{jpegtran} with the \texttt{-progressive} and \texttt{-scans [file]} flags.
+In all cases, \texttt{jpegtran} performs transcoding losslessly.
+We also iteratively reduce the quality level parameter until the PSNR drops below 32 dB to avoid inflating the capacity usage of static baseline images. 
+Still, the quality level of the resized baseline images is not strictly equivalent; we compute PSNR on progressive images before they have been re-encoded to baseline images.
+For many (static baseline) images resized to 10\% at a quality setting of 100, we observed that the PSNR was below 32 dB despite acceptable visual quality. 
