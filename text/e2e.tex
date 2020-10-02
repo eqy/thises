@@ -35,7 +35,7 @@
 \section{Introduction}
 \begin{figure}
     \centering
-    \includegraphics[width=0.45\textwidth]{e2e_diagrams/tradeoff space.pdf}
+    \includegraphics[width=\textwidth]{e2e_diagrams/tradeoff space.pdf}
     \caption{The choice of inference resolution in neural networks introduces associated tightly coupled choices, controlling properties such as the apparent size of objects (crop area), image detail (read size), and inference latency (compute kernel configuration). Each choice potentially impacts one or more of model accuracy, inference time, and data storage bandwidth.}
     \label{fig:tradeoffs}
 \end{figure}
@@ -114,7 +114,7 @@ The progressive JPEG standard is a popular instantiation of a frequency-domain a
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.45\textwidth]{e2e_diagrams/progressive jpeg example.pdf}
+    \includegraphics[width=\textwidth]{e2e_diagrams/progressive jpeg example.pdf}
     \caption{Example of an JPEG image with a progressive encoding (enlarged to show detail). Each image scan refines previous image data by including higher frequency coefficients. The image difference vs. the previous scan is show above each crop; cumulative number of bytes read are shown below.}
     \label{fig:progressivejpeg}
 \end{figure}
@@ -144,7 +144,7 @@ Here, we leverage prior work on automatic tensor program optimization~\cite{chen
 \label{sec:invariance}
 \begin{figure}
     \centering
-    \includegraphics[width=0.4\textwidth]{e2e_diagrams/scale variations.pdf}
+    \includegraphics[width=\textwidth]{e2e_diagrams/scale variations.pdf}
 \caption{Neural networks are sensitive to the apparent scale of objects. This apparent scale is determined by the image crop and the resolution used to evaluate the model. We show three different crops of the same image and the required change to the inference resolution required to match the object scales across the images.}
     \label{fig:cropexample}
 \end{figure}
@@ -159,7 +159,7 @@ We characterize the impact of the issue of popular neural network architectures'
 \section{Choosing Image Resolution from Object Scale}
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{e2e_diagrams/overview figure.pdf}
+    \includegraphics[width=\textwidth]{e2e_diagrams/overview figure.pdf}
     \caption{Example of a dynamic resolution system: images are stored with a progressive encoding that arranges each image as a sequence of scans. Low resolution images are first sent to a small scale model that predicts the best resolution for inference. If necessary, additional image data is read to to to generate the appropriate resolution for inference. }
     \label{fig:pipeline}
 \end{figure}
@@ -207,7 +207,7 @@ When measuring end-to-end accuracy, we use a backbone trained on the full traini
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{e2e_diagrams/cross val.pdf}
+    \includegraphics[width=\textwidth]{e2e_diagrams/cross val.pdf}
     \caption{Training a two model pipeline via a cross-validation style approach.
     %to train a scale model so that all training data can be used by both the backbone and scale model. Note that this requires training several backbone models to train a single scale model. At test-time, a backbone trained on the complete training set is used.
     }
@@ -264,11 +264,11 @@ On ImageNet, this effect was less pronounced, with over 80-90\% of image data re
 \begin{figure*}
     \centering
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.45\textwidth]{e2e_figures/calibration_imagenetresnet18.pdf}\\
+    \includegraphics[width=\textwidth]{e2e_figures/calibration_imagenetresnet18.pdf}\\
     \small (a)
     \end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.45\textwidth]{e2e_figures/calibration_imagenetresnet50.pdf}\\
+    \includegraphics[width=\textwidth]{e2e_figures/calibration_imagenetresnet50.pdf}\\
     \small (b)
     \end{tabular}
     \caption{Storage calibration: relative top1 accuracy change of ResNet-50 and ResNet-18 on ImageNet at different resolutions with varying amounts of image data read vs. reading all image data at each resolution. 
@@ -281,11 +281,11 @@ On ImageNet, this effect was less pronounced, with over 80-90\% of image data re
 \begin{figure*}
     \centering
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.45\textwidth]{e2e_figures/calibration_carsresnet18.pdf}\\
+    \includegraphics[width=\textwidth]{e2e_figures/calibration_carsresnet18.pdf}\\
     \small (a)
     \end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.45\textwidth]{e2e_figures/calibration_carsresnet50.pdf}\\
+    \includegraphics[width=\textwidth]{e2e_figures/calibration_carsresnet50.pdf}\\
     \small (b)
     \end{tabular}
     \caption{Storage calibration: relative top1 accuracy change of ResNet-18 and ResNet-50 on Stanford Cars at different resolutions with varying amounts of image data read.}
@@ -295,7 +295,7 @@ On ImageNet, this effect was less pronounced, with over 80-90\% of image data re
 \section{Maximizing Hardware Utilization for Each Resolution}
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.5\textwidth]{e2e_diagrams/searchspace.pdf}
+    \includegraphics[width=\textwidth]{e2e_diagrams/searchspace.pdf}
     \caption{Example of the search space of a deep learning operator such as 2D convolution. We use a predefined search space to optimize the implementation of the model for different CPUs at different resolutions.}
     \label{fig:searchspace}
 \end{figure}
@@ -326,19 +326,19 @@ Finally, we cover the impact of storage calibration for reducing the amount of r
 \begin{figure*}[t]
     \centering
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.24\textwidth]{e2e_figures/4790K_perf_data_resnet18.pdf}\\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/4790K_perf_data_resnet18.pdf}\\
     \small (a)
     \end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.24\textwidth]{e2e_figures/4790K_perf_data_resnet50.pdf}\\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/4790K_perf_data_resnet50.pdf}\\
     \small (b)
     \end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.24\textwidth]{e2e_figures/2990WX_perf_data_resnet18.pdf}\\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/2990WX_perf_data_resnet18.pdf}\\
     \small (c)
     \end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.24\textwidth]{e2e_figures/2990WX_perf_data_resnet50.pdf}\\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/2990WX_perf_data_resnet50.pdf}\\
     \small (d)
     \end{tabular}
     \caption{Throughput of ResNet-18 and ResNet-50 at different resolutions (plotted according to GFLOPs/s) using the Intel MKLDNN Library compared with a tuned implementation for each resolution measured on Intel 4790K and AMD 2990WX processors. Tuning better sustains throughput at lower resolutions.}
@@ -367,7 +367,7 @@ For lower resolution inference, we find the ideal operating point to be $168\tim
 \begin{figure*}[t]
     \centering
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.245\textwidth]{e2e_figures/imagenet_resnet18_25_center.pdf} \\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/imagenet_resnet18_25_center.pdf} \\
     \small (a)
     \end{tabular}
     %\begin{tabular}{@{}c@{}}
@@ -375,19 +375,19 @@ For lower resolution inference, we find the ideal operating point to be $168\tim
     %\small (b)
     %\end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.245\textwidth]{e2e_figures/imagenet_resnet18_56_center.pdf} \\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/imagenet_resnet18_56_center.pdf} \\
     \small (b)
     \end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.245\textwidth]{e2e_figures/imagenet_resnet18_default_center.pdf} \\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/imagenet_resnet18_default_center.pdf} \\
     \small (c)
     \end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.245\textwidth]{e2e_figures/imagenet_resnet18_full_center.pdf} \\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/imagenet_resnet18_full_center.pdf} \\
     \small (d)
     \end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.245\textwidth]{e2e_figures/imagenet_resnet50_25_center.pdf} \\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/imagenet_resnet50_25_center.pdf} \\
     \small (e)
     \end{tabular}
     %\begin{tabular}{@{}c@{}}
@@ -395,15 +395,15 @@ For lower resolution inference, we find the ideal operating point to be $168\tim
     %\small (g)
     %\end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.245\textwidth]{e2e_figures/imagenet_resnet50_56_center.pdf} \\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/imagenet_resnet50_56_center.pdf} \\
     \small (f)
     \end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.245\textwidth]{e2e_figures/imagenet_resnet50_default_center.pdf} \\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/imagenet_resnet50_default_center.pdf} \\
     \small (g)
     \end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.245\textwidth]{e2e_figures/imagenet_resnet50_full_center.pdf} \\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/imagenet_resnet50_full_center.pdf} \\
     \small (h)
     \end{tabular}
     \caption{Accuracy vs. FLOPs comparison with static and dynamic resolution approaches using ResNet-18 (a-d)and 50 (e-h) on ImageNet. Crop sizes increase from left to right from 25\% on the left to 100\% on the right. Smaller crops favor lower resolutions more, while larger crops favor higher resolutions due to the models' dependence on object scale. The dynamic resolution approach operates at nearly the apex of every pareto curve, without hardcoding resolution.}
@@ -412,7 +412,7 @@ For lower resolution inference, we find the ideal operating point to be $168\tim
 \begin{figure*}[t]
     \centering
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.245\textwidth]{e2e_figures/cars_resnet18_25_center.pdf} \\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/cars_resnet18_25_center.pdf} \\
     \small (a)
     \end{tabular}
     %\begin{tabular}{@{}c@{}}
@@ -420,19 +420,19 @@ For lower resolution inference, we find the ideal operating point to be $168\tim
     %\small (b)
     %\end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.245\textwidth]{e2e_figures/cars_resnet18_56_center.pdf} \\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/cars_resnet18_56_center.pdf} \\
     \small (b)
     \end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.245\textwidth]{e2e_figures/cars_resnet18_default_center.pdf} \\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/cars_resnet18_default_center.pdf} \\
     \small (c)
     \end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.245\textwidth]{e2e_figures/cars_resnet18_full_center.pdf} \\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/cars_resnet18_full_center.pdf} \\
     \small (d)
     \end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.245\textwidth]{e2e_figures/cars_resnet50_25_center.pdf} \\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/cars_resnet50_25_center.pdf} \\
     \small (e)
     \end{tabular}
     %\begin{tabular}{@{}c@{}}
@@ -440,15 +440,15 @@ For lower resolution inference, we find the ideal operating point to be $168\tim
     %\small (g)
     %\end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.245\textwidth]{e2e_figures/cars_resnet50_56_center.pdf} \\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/cars_resnet50_56_center.pdf} \\
     \small (f)
     \end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.245\textwidth]{e2e_figures/cars_resnet50_default_center.pdf} \\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/cars_resnet50_default_center.pdf} \\
     \small (g)
     \end{tabular}
     \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.245\textwidth]{e2e_figures/cars_resnet50_full_center.pdf} \\
+    \includegraphics[width=0.45\textwidth]{e2e_figures/cars_resnet50_full_center.pdf} \\
     \small (h)
     \end{tabular}
     \caption{Accuracy vs. FLOPs comparison with static and dynamic resolution approaches using ResNet-18 (a-d) and 50 (e-h) on Stanford Cars. Crop sizes increase from left to right from 25\% on the left to 100\% on the right. Smaller crops favor lower resolutions more, while larger crops favor higher resolutions due to the models' dependence on object scale. The dynamic resolution approach operates at nearly the apex of every pareto curve, without hardcoding resolution.}
@@ -495,7 +495,7 @@ Overall, however, we find that calibration generalizes well from the training se
 These results indicate that the savings depends on the classification task (the relevance of fine details for accuracy), as well as the distribution of resolution among the input resolutions.
 We note that both the Cars and ImageNet dataset contain images only modestly higher resolution than $448\times448$ on average.
 
-\begin{table*}[t]
+\begin{sidewaystable*}[t]
     \centering
     \begin{tabular}{c|}
     ImageNet\\
@@ -632,10 +632,10 @@ We note that both the Cars and ImageNet dataset contain images only modestly hig
     %Note that the read savings are identical for each crop size as we do not store pre-cropped versions of each image, opting instead to read a different number of scans for each image based on calibrated quality thresholds for each resolution.
     }
     \label{tab:imagenet_storage}
-\end{table*}
+\end{sidewaystable*}
 
 
-\begin{table*}[t]
+\begin{sidewaystable*}[t]
     \centering
     \begin{tabular}{c|}
     Cars \\
@@ -773,7 +773,7 @@ We note that both the Cars and ImageNet dataset contain images only modestly hig
     %Note that the read savings are identical for each crop size as we do not store pre-cropped versions of each image, opting instead to read a different number of scans for each image based on calibrated quality thresholds for each resolution.
     }
     \label{tab:cars_storage}
-\end{table*}
+\end{sidewaystable*}
 %\begin{figure}
 %    \centering
 %    \includegraphics{placeholderstorageMobileNetResnet50.png}
@@ -823,26 +823,26 @@ Still, using a two-model approach remains pareto-optimal in terms of accuracy vs
 
 %TODO: Lessons learned: like all thing machine learning, the best answer is likely data dependent or distribution dependent
 
-%\section{Related Work}
-%Improving the the computational efficiency of neural network inference (both with and without retraining) is a rapidly evolving field of research due to the high computational costs associated with modern convolutional architectures.
-%Frequently, these approaches introduce a quality--computational cost or accuracy--computational tradeoff space.
-%Beyond resolution, architecture agnostic approaches include exploiting quantization~\cite{rastegari2016xnor, zhou2016dorefa, fromm2020riptide}, weight pruning~\cite{ji2018tetris, frankle2018lottery}, input masking~\cite{yang2018energy}, temporal redundancy~\cite{buckler2018eva2}, model cascades~\cite{shen2017fast}, and alternative numerical representations~\cite{kim2016dynamic, lee2017energy, kalamkar2019study}.
-%
-%The issue of scale dependence is an area of active research with model architecture~\cite{DBLP:journals/corr/KanazawaSJ14}, finetuning~\cite{touvron2019fixing}, data augmentation~\cite{hoffer2019mix}, and equivariance-based approaches~\cite{sosnovik2019scaleequivariant} being used.
-%While we present one of many possible motivations for multi-resolution models and one possible strategy for addressing the problem of scale dependence in vision models, the ability for an inference stack to flexibly switch between different image resolutions is useful.
-%Even in the ideal case of fully scale-equivariant models, image resolution remains a tunable hyperparameter dictating the amount of information or fine-grained detail in image in addition to the capacity of feature maps.
-%The overall approach of mapping image data to different resolutions and tuning resolution specific kernels is orthogonal to the motivation behind multi-resolution support.
-%
-%
-%An important requirement of efficient multi-resolution support is the availability of high performance kernel implementations for each combination of resolution, model, and hardware.
-%As the number of such possible combinations grows very quickly, we rely on work in automatic deep learning kernel optimizations ~\cite{ragan2013halide, chen2018tvm, zheng2020ansor, cowan2020automatic} to generate these kernels with minimal programmer effort.
-%
-%Specializing storage with domain-specific knowledge for either increased capacity and performance is also an active area research~\cite{sampson2014approximate, jevdjic2017approximate, mazumdar2019vignette}.
-%Prior work has touched on cases where the relative importance of image data (e.g., critical format bits vs. noisy coefficient values) can be matched to storage at different levels of reliability~\cite{guo2016high, jevdjic2017approximate}.
-%
-%Finally, our dynamic two-model pipeline draws inspiration from Mixture-of-Experts (MoE) approaches in machine learning~\cite{jacobs1991adaptive, shazeer2017outrageously, yang2019soft, lepikhin2020gshard}, where model architectures use a weighted combination of ``experts'' to increase model capacity.
-%Here, our two-model pipeline can be considered a modified MoE that uses weight-sharing, with the different experts being the different resolution variations of the backbone model.
-%While prior work has enforced sparse-weighting~\cite{shazeer2017outrageously} or soft-conditioning~\cite{yang2019soft} to efficiently implement the MoE, we use explicit control flow and train the scale and backbone models on separate objectives.
+\section{Related Work}
+Improving the the computational efficiency of neural network inference (both with and without retraining) is a rapidly evolving field of research due to the high computational costs associated with modern convolutional architectures.
+Frequently, these approaches introduce a quality--computational cost or accuracy--computational tradeoff space.
+Beyond resolution, architecture agnostic approaches include exploiting quantization~\cite{rastegari2016xnor, zhou2016dorefa, fromm2020riptide}, weight pruning~\cite{ji2018tetris, frankle2018lottery}, input masking~\cite{yang2018energy}, temporal redundancy~\cite{buckler2018eva2}, model cascades~\cite{shen2017fast}, and alternative numerical representations~\cite{kim2016dynamic, lee2017energy, kalamkar2019study}.
+
+The issue of scale dependence is an area of active research with model architecture~\cite{DBLP:journals/corr/KanazawaSJ14}, finetuning~\cite{touvron2019fixing}, data augmentation~\cite{hoffer2019mix}, and equivariance-based approaches~\cite{sosnovik2019scaleequivariant} being used.
+While we present one of many possible motivations for multi-resolution models and one possible strategy for addressing the problem of scale dependence in vision models, the ability for an inference stack to flexibly switch between different image resolutions is useful.
+Even in the ideal case of fully scale-equivariant models, image resolution remains a tunable hyperparameter dictating the amount of information or fine-grained detail in image in addition to the capacity of feature maps.
+The overall approach of mapping image data to different resolutions and tuning resolution specific kernels is orthogonal to the motivation behind multi-resolution support.
+
+
+An important requirement of efficient multi-resolution support is the availability of high performance kernel implementations for each combination of resolution, model, and hardware.
+As the number of such possible combinations grows very quickly, we rely on work in automatic deep learning kernel optimizations ~\cite{ragan2013halide, chen2018tvm, zheng2020ansor, cowan2020automatic} to generate these kernels with minimal programmer effort.
+
+Specializing storage with domain-specific knowledge for either increased capacity and performance is also an active area research~\cite{sampson2014approximate, jevdjic2017approximate, mazumdar2019vignette}.
+Prior work has touched on cases where the relative importance of image data (e.g., critical format bits vs. noisy coefficient values) can be matched to storage at different levels of reliability~\cite{guo2016high, jevdjic2017approximate}.
+
+Finally, our dynamic two-model pipeline draws inspiration from Mixture-of-Experts (MoE) approaches in machine learning~\cite{jacobs1991adaptive, shazeer2017outrageously, yang2019soft, lepikhin2020gshard}, where model architectures use a weighted combination of ``experts'' to increase model capacity.
+Here, our two-model pipeline can be considered a modified MoE that uses weight-sharing, with the different experts being the different resolution variations of the backbone model.
+While prior work has enforced sparse-weighting~\cite{shazeer2017outrageously} or soft-conditioning~\cite{yang2019soft} to efficiently implement the MoE, we use explicit control flow and train the scale and backbone models on separate objectives.
 
 \section{Conclusion}
 Image resolution is a fundamental hyperparameter in computer vision with ties to compute complexity, operator optimizations, and storage bandwidth.

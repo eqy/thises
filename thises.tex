@@ -37,9 +37,13 @@
 \usepackage{rotating}
 \usepackage[eulerchapternumbers,parts,linedheaders]{classicthesis}
 
+\usepackage{rotating}
+
 \usepackage{algorithm}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
+
+\usepackage{grffile}
 
 % crap that we need to work???
 %\usepackage{microtype}
@@ -151,6 +155,7 @@
 \subimport*{text/}{abstract}
 \end{center}
 
+\pagenumbering{arabic}
 
 \chapter{Introduction}
 \subimport*{text/}{intro}
@@ -165,6 +170,7 @@
 \chapter{Tuning The Tuning of Computer Vision Kernels}
 
 \chapter{End-to-End Resolution and Model Co-optimization}
+\subimport*{text/}{e2e}
 
 \cleardoublepage
 
