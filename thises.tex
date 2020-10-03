@@ -4,10 +4,12 @@
                 american,%
                 ]{scrreprt}
 
-\usepackage{scrhack}
 \usepackage[dvipsnames]{xcolor}
 \usepackage[backend=biber,natbib=true,style=numeric-comp,%
             maxbibnames=99,abbreviate=false,backref=true]{biblatex}
+%\usepackage{minted}
+%\usepackage{listing}
+\usepackage{listings}
 \usepackage{amsmath}
 \DeclareMathOperator{\sgn}{sgn}
 \usepackage{amssymb}
@@ -44,6 +46,8 @@
 \usepackage{algpseudocode}
 
 \usepackage{grffile}
+
+\usepackage{scrhack}
 
 % crap that we need to work???
 %\usepackage{microtype}
@@ -141,6 +145,7 @@
   \printfield{titleaddon}}
 
 \begin{document}
+\lstloadlanguages{Python}
 \raggedbottom
 \pagenumbering{roman}
 \pagestyle{plain}
@@ -168,6 +173,7 @@
 \subimport*{text/}{storage}
 
 \chapter{Tuning The Tuning of Computer Vision Kernels}
+\subimport*{text/}{sys}
 
 \chapter{End-to-End Resolution and Model Co-optimization}
 \subimport*{text/}{e2e}
