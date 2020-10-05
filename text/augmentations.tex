@@ -1,11 +1,11 @@
 \section{Introduction}
 \begin{figure}[t]
-\begin{subfigure}[h]{0.5\textwidth}
+\begin{subfigure}[h]{\textwidth}
 \includegraphics[width=\textwidth]{diagrams/training.png}
 \caption{Training pipeline used in our evaluation.}
 \label{fig:overview}
 \end{subfigure}
-\begin{subfigure}[h]{0.5\textwidth}
+\begin{subfigure}[h]{\textwidth}
 \includegraphics[width=\textwidth]{figures/first_block.png}
 \caption{Relative importance of the first block of ResNet-18 for predicting each of the data augmentation ranking tasks.}
 \label{fig:importance}
@@ -399,7 +399,6 @@ Other augmentations, such as hue and saturation, may present cues in the absolut
 
 
 \begin{table}[t]
-\begin{footnotesize}
 \begin{center}
 \begin{tabularx}{\textwidth}{  | >{\raggedright\arraybackslash}X 
   | >{\centering\arraybackslash}X 
@@ -507,7 +506,6 @@ Other augmentations, such as hue and saturation, may present cues in the absolut
  \hline
 \end{tabularx}
 \end{center}
-\end{footnotesize}
 \caption{Accuracies for ranking models that use the baselines and ResNet backbones across the ranking tasks. ResNet features encode many augmentation attributes to a high degree of accuracy, particularly high-level ones such as scale and aspect ratio. ResNet features also beat the baselines on contrast by a wide margin. The accuracy of the ranking model can be used as a proxy to determine to what degree an augmentation attribute is encoded in the CNNs.}
 \label{tab:accs}
 
@@ -604,7 +602,6 @@ Indeed,~\autoref{tab:halfs} shows this drop, suggesting that even if neural netw
 
 
 \begin{table}[tb]
-\begin{footnotesize}
 \begin{center}
 \begin{tabularx}{\textwidth}{  | >{\raggedright\arraybackslash}X 
   | >{\centering\arraybackslash}X 
@@ -684,7 +681,6 @@ Indeed,~\autoref{tab:halfs} shows this drop, suggesting that even if neural netw
 \caption{Ranking accuracy when only using features from a block of ResNet-18, ordered from early to later layers. The early blocks yield higher accuracy, indicative of early layers more strongly encoding augmentation attributes.}
 \label{tab:halfs}
 \end{center}
-\end{footnotesize}
 \end{table}
 
 
