@@ -211,7 +211,7 @@ We introduce the SeaNet to provide an easily extensible automatic deep learning 
 %For example, Attention relies on matrix multiplication as its core primitive, and current vision models such as EfficientNet do not stray from typical vision operator shapes (e.g., 3$\times$3 convolution).
 %In order for deep learning research to be uncurbed by software limitations, performant kernels should be generated for arbitrary operator definitions and hardware platforms.
 \begin{figure}[ht]
-\includegraphics[width=0.5\textwidth]{sys_diagrams/overview2.pdf}
+\includegraphics[width=\textwidth]{sys_diagrams/overview2.pdf}
 \caption{SeaNet provides flexibility and extensibility to existing deep learning program optimization stacks.
 Researchers can use SeaNet to experiment with novel automatic optimization components for off-the-self of bespoke models. Hardware engineers and researchers can propose new search spaces of optimizations for deep learning operators. SeaNet can be used to build collections of optimized kernels for low level system libraries (e.g., cuDNN, MIOpen).}
 \end{figure}
@@ -234,29 +234,29 @@ The contributions of this paper are as follows:
 %In addition to defining a set of concrete optimization tasks, NAME includes critical infrastructure to aid researchers in bootstrapping the evaluation of their solutions. The NAME infrastructure includes: a distributed RPC system to scale tasks across a diverse collection of hardware devices, a common optimization API to target to facilitate modular implementations, and a collection of reference datasets to quickly prototype ideas.
 %Finally, we provide a set of reference implementations to be used as strong baselines.
 
-\section{Related Work}
-SeaNet presents an environment for deep learning kernel optimization; this environment can be analogous to simulation environments for reinforcement learning agents, where researchers can prototype ideas and algorithms without needing to build a virtual or physical world from scratch.
-Ray~\cite{222605} is an analogous environment for reinforcement learning.
-SeaNet differs in its performance-driven objective that can leverage measurements on real hardware and the ready availability of out-of-the-box benchmarks (e.g., reference workloads such as popular computer vision models).
-Park~\cite{mao2019park} is an environment for reinforcement learning-based optimization for general systems challenges, such as device placement, circuit design, and load balancing.
-While reinforcement learning can also be applied to the challenge of automatic kernel optimization, we focus on providing generic support for optimization pipelines for a wide breadth of hardware devices and kernels.
-Similarly, Vizier~\cite{golovin2017google} presents an optimization service for general blackbox functions.
-The SeaNet environment can be viewed as a Vizier-like service for whitebox deep learning kernels where support for experimenting with the optimization algorithms themselves is a design goal.
-
-
-On the benchmark front, SeaNet is analogous to recent work such as NAS-Bench-101~\cite{pmlr-v97-ying19a} which provides a reference dataset for NAS alongside benchmark tasks.
-However, we while we provide a dataset, we do not settle on a fixed dataset as hardware targets and models are continuously evolving.
-SeaNet benchmark tasks have a similar flavor to the NAS-Bench tasks, as neural architecture search presents a discrete optimization problem similar in structure to that of program optimization.
-Concretely, the main differences are in the feasibility of evaluation (seconds vs. hours to evaluate candidates), and the objectives (performance vs. validation accuracy).
-Additionally, we encourage SeaNet users to collect performance data and run experiments on hardware that they have available, whereas this may not be feasible for NAS-Bench tasks.
-However, it is entirely possible that variations of successful kernel optimization algorithms and pipelines can be successfully applied to neural architecture search, and we hope to see cross-pollination across the problems.
-
-
-The task of automatic program optimization is not new, and has been recently visited with several different approaches, such as analytical models~\cite{mullapudi2016automatically}, statistical cost model guided search~\cite{NIPS2018_7599}, tree search~\cite{Adams2019LearningTO}, static cost models~\cite{Kim:2019:CGH:3314872.3314885}, and statistical cost models driven by handpicked features~\cite{Li:2018:DPI}.
-SeaNet aims to provide a flexible framework for researchers to explore new innovations.
-%Differences (performance driven), and measurements also happen on real hardware (are feasible) vs. difficulty of deploying agents to real environments.
-%SeaNet presents both an \emph{environment} for automatic optimization experiments, and a \emph{dataset} for prototyping.
-Additionally, parallel work on machine learning for systems work includes automatic device placement~\cite{mirhoseini2017device}, graph optimization~\cite{metaflow_sysml19}, parallelization~\cite{soap_sysml19}, architecture search~\cite{tan2019mnasnet}~\cite{zoph2018learning}, among others. 
+%\section{Related Work}
+%SeaNet presents an environment for deep learning kernel optimization; this environment can be analogous to simulation environments for reinforcement learning agents, where researchers can prototype ideas and algorithms without needing to build a virtual or physical world from scratch.
+%Ray~\cite{222605} is an analogous environment for reinforcement learning.
+%SeaNet differs in its performance-driven objective that can leverage measurements on real hardware and the ready availability of out-of-the-box benchmarks (e.g., reference workloads such as popular computer vision models).
+%Park~\cite{mao2019park} is an environment for reinforcement learning-based optimization for general systems challenges, such as device placement, circuit design, and load balancing.
+%While reinforcement learning can also be applied to the challenge of automatic kernel optimization, we focus on providing generic support for optimization pipelines for a wide breadth of hardware devices and kernels.
+%Similarly, Vizier~\cite{golovin2017google} presents an optimization service for general blackbox functions.
+%The SeaNet environment can be viewed as a Vizier-like service for whitebox deep learning kernels where support for experimenting with the optimization algorithms themselves is a design goal.
+%
+%
+%On the benchmark front, SeaNet is analogous to recent work such as NAS-Bench-101~\cite{pmlr-v97-ying19a} which provides a reference dataset for NAS alongside benchmark tasks.
+%However, we while we provide a dataset, we do not settle on a fixed dataset as hardware targets and models are continuously evolving.
+%SeaNet benchmark tasks have a similar flavor to the NAS-Bench tasks, as neural architecture search presents a discrete optimization problem similar in structure to that of program optimization.
+%Concretely, the main differences are in the feasibility of evaluation (seconds vs. hours to evaluate candidates), and the objectives (performance vs. validation accuracy).
+%Additionally, we encourage SeaNet users to collect performance data and run experiments on hardware that they have available, whereas this may not be feasible for NAS-Bench tasks.
+%However, it is entirely possible that variations of successful kernel optimization algorithms and pipelines can be successfully applied to neural architecture search, and we hope to see cross-pollination across the problems.
+%
+%
+%The task of automatic program optimization is not new, and has been recently visited with several different approaches, such as analytical models~\cite{mullapudi2016automatically}, statistical cost model guided search~\cite{NIPS2018_7599}, tree search~\cite{Adams2019LearningTO}, static cost models~\cite{Kim:2019:CGH:3314872.3314885}, and statistical cost models driven by handpicked features~\cite{Li:2018:DPI}.
+%SeaNet aims to provide a flexible framework for researchers to explore new innovations.
+%%Differences (performance driven), and measurements also happen on real hardware (are feasible) vs. difficulty of deploying agents to real environments.
+%%SeaNet presents both an \emph{environment} for automatic optimization experiments, and a \emph{dataset} for prototyping.
+%Additionally, parallel work on machine learning for systems work includes automatic device placement~\cite{mirhoseini2017device}, graph optimization~\cite{metaflow_sysml19}, parallelization~\cite{soap_sysml19}, architecture search~\cite{tan2019mnasnet}~\cite{zoph2018learning}, among others. 
 
 \section{SeaNet Workflows and Tasks}
 \label{sec:tasks}
@@ -298,7 +298,7 @@ One critical feature of the optimization API is that it is device-agnostic, as s
 
 
 \begin{figure}[tb]
-\includegraphics[width=0.5\textwidth]{sys_diagrams/plug.pdf}
+\includegraphics[width=\textwidth]{sys_diagrams/plug.pdf}
 \caption{
 Organization of optimization modules outlined by the SeaNet benchmark task: the proposer (model optimizer), cost model, and sampler. The bottom half denotes an example pipeline instantiated with concrete options for each of the modules.}
 \label{fig:overview}
@@ -483,7 +483,7 @@ Additionally, users are free to collect their own dataset using in-house hardwar
 \label{sec:searchspace}
 \begin{figure}[tb]
     \centering
-    \includegraphics[width=0.5\textwidth]{sys_diagrams/searchspace.pdf}
+    \includegraphics[width=\textwidth]{sys_diagrams/searchspace.pdf}
     \caption{Organization of an operator search space in SeaNet following its operator definition. Deep learning kernels present a loop nest of operations, with various transformations available to different components of the loop nest. Depending on the transformation, additional parameters may need to be decided. Note that the search space definition can be recursive (e.g., if a loop nest is tiled, the resulting loop nest can optionally be further tiled).}
     \label{fig:searchspace}
 \end{figure}
@@ -588,7 +588,7 @@ We describe our RPC protocol in two parts: a \emph{control} plane which handles 
 Together, these components of the protocol enable streamlined prototyping and deployment of neural network implementations.
 \paragraph{Control Plane}
 \begin{figure}[t!]
-\includegraphics[width=0.5\textwidth]{sys_diagrams/tracker.pdf}
+\includegraphics[width=\textwidth]{sys_diagrams/tracker.pdf}
 \caption{Summary of the Control Plane (RPC Tracker) Protocol.
   1. An available device registers itself with the RPC tracker, providing a one-time use ``token`` value along with its device type~(in this case ``TITANX'').
   2. An RPC client requests a device of type ``TITANX.'' The tracker provides the address and one-time use token of an available device.
@@ -680,7 +680,7 @@ pixel2 (ARM CPU)&89&86&113\\
 \subsection{Fault Tolerance}
 
 \begin{figure}[t!]
-\includegraphics[width=0.5\textwidth]{sys_diagrams/android.pdf}
+\includegraphics[width=\textwidth]{sys_diagrams/android.pdf}
 \caption{Overview of the Android RPC runtime implementation.
   A second activity is dedicated to the RPC session in a separate process for fault tolerance, and also to ensure that the RPC session receives high OS priority by keeping its parent process on-screen. RPC session timeouts are enforced by a watchdog which ``races'' against the session processor.
   If the watchdog finishes first, the RPC process is terminated and restarted.}
@@ -721,12 +721,12 @@ We then explore which sampling and model optimizing strategies are best given a 
 Following the first task, we visit the second task of predicting peak performance using different regression models.
 \begin{figure}[tb]
 \begin{center}
-\begin{subfigure}[]{0.4\textwidth}
+\begin{subfigure}[]{\textwidth}
 \includegraphics[width=\textwidth]{sys_figures/blackbox1080tiresnet-18_5_.pdf}
 \end{subfigure}
 \end{center}
 \begin{center}
-\begin{subfigure}[]{0.4\textwidth}
+\begin{subfigure}[]{\textwidth}
 \includegraphics[width=\textwidth]{sys_figures/blackboxrk3399_resnet-18_5_.pdf}
 \end{subfigure}
 \end{center}
@@ -740,7 +740,7 @@ Following the first task, we visit the second task of predicting peak performanc
 \begin{figure}[tb]
 \begin{center}
 %\begin{subfigure}[]{\textwidth}
-\includegraphics[width=0.4\textwidth]{sys_figures/optimizer1080tiresnet-18_9_.pdf}
+\includegraphics[width=\textwidth]{sys_figures/optimizer1080tiresnet-18_9_.pdf}
 \end{center}
 %\end{subfigure}
 %\begin{subfigure}[]{\textwidth}
@@ -752,7 +752,7 @@ Following the first task, we visit the second task of predicting peak performanc
 \begin{figure}[tb]
 \begin{center}
 %\begin{subfigure}[]{\textwidth}
-\includegraphics[width=0.4\textwidth]{sys_figures/sampler1080tiresnet-18_9_.pdf}
+\includegraphics[width=\textwidth]{sys_figures/sampler1080tiresnet-18_9_.pdf}
 %\end{subfigure}
 %\begin{subfigure}[]{\textwidth}
 %\includegraphics[width=0.4\textwidth]{figures/allrk3399_resnet-18_10_.pdf}
@@ -765,7 +765,7 @@ Following the first task, we visit the second task of predicting peak performanc
 \begin{figure}[ht]
 \begin{center}
 %\begin{subfigure}[]{\textwidth}
-\includegraphics[width=0.4\textwidth]{sys_figures/all1080tiresnet-18_9_.pdf}
+\includegraphics[width=\textwidth]{sys_figures/all1080tiresnet-18_9_.pdf}
 \caption{Task 1: Comparison of all pipelines. All methods outperform the random baseline on this workload, with many of the best performing pipelines relying on an evolutionary algorithm (either as the optimizer or in blackbox form).}
 \label{fig:all}
 \end{center}
@@ -819,7 +819,7 @@ While the relative efficiency of different pipelines can be tricky to interpret,
 \paragraph{Task 2: Peak Performance Prediction}
 \begin{figure}[ht]
 \begin{center}
- \begin{subfigure}[]{0.5\textwidth}
+ \begin{subfigure}[]{\textwidth}
 \includegraphics[width=\textwidth]{sys_figures/cuda_1080ti_binary_throughput.pdf}
 %\caption{Predicted vs. actual peak-performance on a gradient boosted model trained on pretuned workloads for the 1080Ti.
 %The vertical axis denotes shape parameters of 2D convolution
@@ -828,7 +828,7 @@ While the relative efficiency of different pipelines can be tricky to interpret,
 \end{subfigure}
 \end{center}
 \begin{center}
- \begin{subfigure}[]{0.5\textwidth}
+ \begin{subfigure}[]{\textwidth}
 \includegraphics[width=\textwidth]{sys_figures/mali_rk3399_binary_throughput.pdf}
 %\caption{Predicted vs. actual peak-performance on a gradient boosted tree model trained on pretuned workloads for the Mali T860-MP4. 
 %The vertical axis denotes shape parameters of 2D convolution.
@@ -837,7 +837,7 @@ While the relative efficiency of different pipelines can be tricky to interpret,
 \end{subfigure}
 \end{center}
 \begin{center}
-\begin{subfigure}[]{0.5\textwidth}
+\begin{subfigure}[]{\textwidth}
 \includegraphics[width=\textwidth]{sys_figures/arm_cpu_rk3399_binary_throughput.pdf}
 \label{fig:peaka72}
 \end{subfigure}
