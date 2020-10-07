@@ -351,7 +351,7 @@ We show an example of a model optimizer in listing ~\autoref{lst:modeloptimizer}
 %linenos
 %]
 %{python}
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[caption={Simple example of a naive random model optimizer. A reference to a cost model is passed as \emph{model}, the number of proposals is specified with \emph{num}, and \emph{excl} contains a set of any points in the search space that should be excluded from consideration.},label={lst:modeloptimizer},language=Python]
 def find_maximums(self, model, num, excl):
     self.visited = set()
     size = len(self.task.config_space)
@@ -371,11 +371,9 @@ def find_maximums(self, model, num, excl):
         scores[picked.index(item)],
     reverse=True)
     return points[:num]
-%\end{minted}
-\caption{Simple example of a naive random model optimizer. A reference to a cost model is passed as \emph{model}, the number of proposals is specified with \emph{num}, and \emph{excl} contains a set of any points in the search space that should be excluded from consideration.}
-\label{lst:modeloptimizer}
 \end{lstlisting}
 
+%\end{minted}
 \subsection{Cost Model API}
 While evaluating the performance of proposed kernels is relatively cheap compared to traditional Bayesian optimization settings, hardware resources typically limit the number of feasible experiments (kernels to profile on real hardware) to the order of thousands for practical problems.
 This limitation means that cost models (either statistical, analytical, or simulated) are often useful for boosting the performance of algorithms that rely on some estimate of performance.
@@ -398,7 +396,7 @@ We show a sample implementation of a cost model in listing ~\autoref{lst:costmod
 %linenos
 %]
 %{python}
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[caption={Simplified example of a gradient tree boosting cost model using the XGBoost~\cite{chen2016xgboost} library. \texttt{\_get\_feature} can be any function that presents an arbitrary feature representation to the cost model. For example, this representation may simply be a concatenation of the choices, an AST representation of the lowered code, or a dataflow graph of operations.}, label={lst:costmodel}, language=Python]
 def fit(self, xs, ys,...):
     x_train = self._get_feature(xs)
     y_train = np.array(ys)
@@ -413,11 +411,8 @@ def predict(self, xs,...):
     feas = self._get_feature(xs)
     dtest = xgb.DMatrix(feas)
     return self.bst.predict(dtest)
-%\end{minted}
-\caption{Simplified example of a gradient tree boosting cost model using the XGBoost~\cite{chen2016xgboost} library. \texttt{\_get\_feature} can be any function that presents an arbitrary feature representation to the cost model. For example, this representation may simply be a concatenation of the choices, an AST representation of the lowered code, or a dataflow graph of operations.}
-\label{lst:costmodel}
 \end{lstlisting}
-
+%\end{minted}
 
 
 \subsection{Sampler API}
@@ -439,7 +434,7 @@ We show an example of a sampler in listing ~\autoref{lst:sampler}.
 %linenos
 %]
 %{python}
-\begin{lstlisting}[language=Python]
+\begin{lstlisting}[caption={Example of a $k$-means clustering based sampler that attempts to achieve sample diversity. Points refers to the current proposed set of configurations, scores are their corresponding scores as given by a cost model, and the plan size is the number of points (configurations) that should be selected for measurement.},label={lst:sampler},language=Python]
 def sample(self, points, scores, plan_size):
     #convert configuration index to coordinates
     X = [point2knob(point, self.dims)
@@ -450,12 +445,8 @@ def sample(self, points, scores, plan_size):
     plan = [int(knob2point(mean, self.dims))
             for mean in means]
     return plan
-\end{minted}
-\caption{Example of a $k$-means clustering based sampler that attempts to achieve sample diversity.
-Points refers to the current proposed set of configurations, scores are their corresponding scores as given by a cost model, and the plan size is the number of points (configurations) that should be selected for measurement.}
-\label{lst:sampler}.
 \end{lstlisting}
-
+%\end{minted}
 %We show evaluations of baseline proposer-cost-model-sampler pipelines in the results section.
 
 
@@ -836,6 +827,9 @@ While the relative efficiency of different pipelines can be tricky to interpret,
 \label{fig:peakmali}
 \end{subfigure}
 \end{center}
+\end{figure}
+\begin{figure}[ht]
+\ContinuedFloat
 \begin{center}
 \begin{subfigure}[]{\textwidth}
 \includegraphics[width=\textwidth]{sys_figures/arm_cpu_rk3399_binary_throughput.pdf}
