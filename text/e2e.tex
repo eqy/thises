@@ -195,7 +195,7 @@ True wall-clock scaling is slightly better, as higher compute complexity tends t
     ResNet-18 & $448\times448$ & 7.3 & 68.9\\ 
     \end{tabular}
     \caption{Example of compute complexity scaling with input resolution (in billions of floating-point operations). Here, the accuracy values are obtained by performing inference on a model trained at $224\times224$ resolution, indicating the train-test resolution discrepancy~\cite{touvron2019fixing} where higher resolutions do not improve accuracy due to a scale mismatch. }
-    \label{tab:my_label}
+    \label{tab:complexity_scaling}
 \end{table}
 
 \paragraph{Scale Model Training}
@@ -293,12 +293,12 @@ On ImageNet, this effect was less pronounced, with over 80-90\% of image data re
 \end{figure*}
 
 \section{Maximizing Hardware Utilization for Each Resolution}
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=\textwidth]{e2e_diagrams/searchspace.pdf}
-    \caption{Example of the search space of a deep learning operator such as 2D convolution. We use a predefined search space to optimize the implementation of the model for different CPUs at different resolutions.}
-    \label{fig:searchspace}
-\end{figure}
+%\begin{figure}[t]
+%    \centering
+%    \includegraphics[width=\textwidth]{e2e_diagrams/searchspace.pdf}
+%    \caption{Example of the search space of a deep learning operator such as 2D convolution. We use a predefined search space to optimize the implementation of the model for different CPUs at different resolutions.}
+%    \label{fig:searchspace}
+%\end{figure}
 Our goal with respect to compute kernels is to find the optimal implementation for every resolution, ideally preserving hardware utilization across all resolutions.
 Common computationally intensive operators for computer vision models such as 2D convolution typically require highly specialized implementations on modern hardware such as GPGPUs or even CPUs with wide vector instruction sets.
 As these specialized implementations depend on hardware implementation details such as the organization and size of the compute units (e.g., CUDA cores) and memory hierarchy (e.g., Shared/Scratchpad memory, caches, and global DRAM), they are also highly dependent on input sizes and data layouts.
@@ -407,7 +407,7 @@ For lower resolution inference, we find the ideal operating point to be $168\tim
     \small (h)
     \end{tabular}
     \caption{Accuracy vs. FLOPs comparison with static and dynamic resolution approaches using ResNet-18 (a-d)and 50 (e-h) on ImageNet. Crop sizes increase from left to right from 25\% on the left to 100\% on the right. Smaller crops favor lower resolutions more, while larger crops favor higher resolutions due to the models' dependence on object scale. The dynamic resolution approach operates at nearly the apex of every pareto curve, without hardcoding resolution.}
-    \label{fig:accflops_resnet}
+    \label{fig:accflops_resnet_imagenet}
 \end{figure*}
 \begin{figure*}[t]
     \centering
@@ -452,7 +452,7 @@ For lower resolution inference, we find the ideal operating point to be $168\tim
     \small (h)
     \end{tabular}
     \caption{Accuracy vs. FLOPs comparison with static and dynamic resolution approaches using ResNet-18 (a-d) and 50 (e-h) on Stanford Cars. Crop sizes increase from left to right from 25\% on the left to 100\% on the right. Smaller crops favor lower resolutions more, while larger crops favor higher resolutions due to the models' dependence on object scale. The dynamic resolution approach operates at nearly the apex of every pareto curve, without hardcoding resolution.}
-    \label{fig:accflops_resnet}
+    \label{fig:accflops_resnet_cars}
 \end{figure*}
  To highlight the flexibility of a dynamic approach to resolution compared to static approaches that perform inference at a fixed resolution, we compare the accuracy of a dynamic resolution switching approach at several different center crop ratios (25\%, 39\%, 56\%, and ~75\%)\footnote{``75\%'' corresponds to the common practice of selecting a center crop (e.g., of 224 pixels from a $256\times256$ image, or 448 pixels from a $512\times512$ image), though the true area is closer to 77\%.}.
  Note that the best static choice of resolution changes for different crop sizes, as predicted by the ``train-test resolution discrepancy~\cite{touvron2019fixing}.''
@@ -463,7 +463,7 @@ The dynamic resolution two model pipeline does not incur a significant overhead 
 We found in early experiments that predicting scale does not require fine-grained image details, and model accuracy did not vary significantly with the capacity of the model architecture (e.g., MobileNet vs. deep ResNets). 
 In this case, the MobileNetv2 architecture used for the scale model corresponds to ~0.08 GFLOPs at $112\times112$ compared to the 1.8GFLOPs of ResNet-18 and 4.1GFLOPs of ResNet-50 at $224\times224$, an almost negligible amount of overhead.
 
-\autoref{fig:accflops_resnet} shows the accuracy achieved by static and dynamic resolution approaches across a range of crop sizes on ImageNet.
+\autoref{fig:accflops_resnet_cars, fig:accflops_resnet_imagenet} shows the accuracy achieved by static and dynamic resolution approaches across a range of crop sizes on ImageNet.
 On the ImageNet dataset, the best static resolution for the 56\%, 75\%, and 100\% center crops was $280\times280$, as expected due to the use of random cropping during training favors slightly larger object scales.
 However, using the full crop (including \emph{more} of the image area) decreases model accuracy as object scales are biased towards smaller images.
 The two-model dynamic resolution attains most of the accuracy of the best static resolution for each approach at a lower FLOP cost, and is pareto-optimal and near the apex of accuracy for most resolution configurations.

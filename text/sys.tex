@@ -136,7 +136,7 @@ Beyond program optimization, there has been tremendous progress in automatic opt
 Recent advances include automatic optimizations at the architecture~\cite{liu2018darts}~\cite{zoph2018learning}, graph~\cite{metaflow_sysml19}, kernel~\cite{NIPS2018_7599}, and hardware design levels~\cite{Koeplinger:2016:AGE:3007787.3001150}~\cite{koeplinger2018spatial}~\cite{moreau2019hardware}~\cite{8009208}, where performance is quickly becoming competitive with human engineers.
 In work where the contribution requires human insight into model architectures (e.g., resolution and model width scaling~\cite{tan2019efficientnet} or novel combinations of \emph{operators} (e.g., convolutions with different kernel sizes) ~\cite{tan2019mixnet}, it is common to see the last mile of improvement being reached with automated methods such as neural architecture search (NAS).
 However, in each subdomain of automatic optimization, there is room for standardized environments for evaluation.
-In this paper, we focus on the rapidly developing line of work of kernel-level deep learning compilers~\cite{xing2019dnnvm}~\cite{222575}, where automated approaches show promise.
+We focus on the rapidly developing line of work of kernel-level deep learning compilers~\cite{xing2019dnnvm}~\cite{222575}, where automated approaches show promise.
 
 To advance the field, automatic program optimization must support a wide range of models: the commonplace, and the cutting edge across all deep learning domains.
 However, automatic optimization research depends heavily on performance evaluation on real-world hardware.
@@ -217,14 +217,15 @@ Researchers can use SeaNet to experiment with novel automatic optimization compo
 \end{figure}
 
 
-The contributions of this paper are as follows:
-\begin{itemize}
-\setlength\itemsep{0em}
-\item We introduce the SeaNet automatic optimization environment.
-\item Alongside several reference benchmark tasks for machine learning program optimization, we introduce an API for researchers to plug in custom algorithm implementations.
-\item We provide a cross-platform RPC runtime-system that supports a wide range of hardware devices.
-\item We include baselines for each of our benchmark tasks.
-\end{itemize}
+%The contributions of this paper are as follows:
+%We provide
+%\begin{itemize}
+%\setlength\itemsep{0em}
+%\item We introduce the SeaNet automatic optimization environment.
+%\item Alongside several reference benchmark tasks for machine learning program optimization, we introduce an API for researchers to plug in custom algorithm implementations.
+%\item We provide a cross-platform RPC runtime-system that supports a wide range of hardware devices.
+%\item We include baselines for each of our benchmark tasks.
+%\end{itemize}
 %We are inspired by the impact of (x y z ImageNet, DawnBench) benchmarks in other areas in terms of improvements towards on an important and shared goal of the community.
 %Traditionally, dramatic breakthroughs in research domains have been preceded by new datasets that enabled the efficient exploration and scaling of novel ideas (e.g., ImageNet for vision, GLUE for NLP).
 %Standardization gives researchers confidence that their comparisons are valid and their results reproducible and the opportunity for the rapid extension and iteration of existing solutions.
@@ -273,7 +274,7 @@ In this setting, a researcher or developer has prepared a deep learning model fo
 Given a single workload out of a collection of workloads presented in a model, generating the optimal code can be approximated by choosing the right configuration for a set of choices in a discrete search space.
 We describe the search space in more detail in~\autoref{sec:rpc}.
 These knobs can be attributes such as the tiling of loops in the workload, the parallelization strategy, memory layout, etc.
-We expect this task to be driven by statistical methods that rely on \emph{measurements on real hardware} or \emph{simulation} in the optimization loop, as shown in~\autoref{fig:overview}.
+We expect this task to be driven by statistical methods that rely on \emph{measurements on real hardware} or \emph{simulation} in the optimization loop, as shown in~\autoref{fig:sys_overview}.
 Accordingly, the \emph{cost-modeling} aspect of this task can be modularized and evaluated in isolation using a static dataset, which we provide alongside SeaNet.
 
 
@@ -291,7 +292,7 @@ Additionally, peak performance prediction is useful even when the collection of 
 In this section, we present a the SeaNet modular automatic optimization pipeline aimed at tackling the first task of generating the best operator implementations using as few evaluations of a simulator or real hardware as possible.
 The pipeline starts from a \emph{search space} of possible implementations for each program, with up to billions of \emph{configurations} (a point in the search space with instantiated values for all tunable implementation parameters).
 Next in the pipeline is \emph{model optimizer}, which proposes promising configurations to a \emph{cost-model} or value function, which estimates the performance of the proposed configurations.
-These performance results are filtered by a \emph{sampler} that  decides which configurations to evaluate on real hardware. This pipeline is shown with a concrete example in~\autoref{fig:overview}.
+These performance results are filtered by a \emph{sampler} that  decides which configurations to evaluate on real hardware. This pipeline is shown with a concrete example in~\autoref{fig:sys_overview}.
 After a round of measurements on hardware, the cost model is updated and the pipeline repeated.
 One critical feature of the optimization API is that it is device-agnostic, as simulator and performance measurement on hardware devices is handled by the RPC subsystem (\autoref{sec:rpc}) of SeaNet.
 %Previous works (?? NAS, Proxyless) have shown that considering the performance implications of optimizing deep learning computation (e.g., through NAS) can yield appreciable real-world gains.
@@ -301,7 +302,7 @@ One critical feature of the optimization API is that it is device-agnostic, as s
 \includegraphics[width=\textwidth]{sys_diagrams/plug.pdf}
 \caption{
 Organization of optimization modules outlined by the SeaNet benchmark task: the proposer (model optimizer), cost model, and sampler. The bottom half denotes an example pipeline instantiated with concrete options for each of the modules.}
-\label{fig:overview}
+\label{fig:sys_overview}
 \end{figure}
 %We describe several concrete experiment flows in this section.
 %The original AutoTVM work has seen success in specialized systems projects; we wish to extend the ability to do such work to the broader machine learning community.
@@ -608,6 +609,16 @@ The RPC runtime enables portability of optimization strategies and computational
 After developing an optimization strategy for a hardware device target (e.g., Raspberry Pi), a user can quickly evaluate the same optimization strategy on an NVIDIA GPU as both share the same RPC interface.
 %For devices that share an underlying architecture but different operating system stacks (e.g., a Raspberry Pi and Android phone), only the device target must be changed.
 %This ease-of-use is a substantial departure from needing to manually specify compilation toolflows for each hardware device; the user only needs to request a different hardware device type from the RPC tracker.
+
+\paragraph{Timing Measurement}
+Designing a method to accurately measure the wall-clock time of deep learning workloads (with a wide range of arithmetic complexity) that generalizes across different types of hardware (with a wide range of performance and environments) is difficult.
+In order to collect \emph{repeatable} measurements across different devices and workloads, we focus on minimizing transient system effects and dispatch overheads that may inaccurately bias performance measurement.
+Hardware devices with different power states are an example of platforms where accurate and repeatable timing measurement is tricky.
+In some cases, a given workload's timing measurement will appear to be faster or slower depending on the device's power state.
+This behavior can lead to surprising results, such as a very fast kernel appearing to be slower as it finishes \emph{too quickly}, before a hardware device can ramp up to a higher power state.
+We take a simple approach to address this problem, by allowing the measurement function to specify a minimum repeat time, or the minimum amount of time a loop of measurements must take.
+If the minimum time is not met, the number of iterations of the measurement loop is increased.
+Here, the goal is to force hardware devices into the highest sustainable power state and to amortize away/discard runs that executed at a lower power state.
 
 %\paragraph{Implementation Requirements}
 %The RPC runtime defines a clear and lightweight set of requirements for enabling deep learning optimization on a hardware device.
