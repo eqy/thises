@@ -1,0 +1,19 @@
+
+\paragraph{Data Augmentations for Pretraining}
+Data augmentations are an interesting topic of study in unsupervised or semi-supervised learning settings.
+From one perspective, a reasonable objective is to use augmentations to enforce consistency between perturbed input examples originating from the same source.
+From another, augmentations that distort images can be potentially useful in creating pre-training tasks (e.g., correctly ordering shuffled image patches, reorienting a rotated image).
+However, not all augmentations appear to be useful as components of pre-training tasks, as it may be desirable for the downstream fine-tuned model to normalize away such augmentations.
+
+\paragraph{Solving the Scale Equivariance Problem}
+Another approach to solving the scale invariance problem is to change the region of interest that is used as input to a computer vision model dynamically, depending on the positioning and scale of an object in a frame.
+This approach would effectively be an extension of neural network models that use a version of the attention mechanism popular in natural language processing models.
+While convolution-based architectures are currently more common in computer vision, recent work has shown that with sufficient computation, attention-based architectures can also be competitive with state-of-the-art convolution approaches.
+
+\paragraph{Tuning Deep Learning Kernels}
+While tremendous progress has been made in reducing the amount of human engineering effort needed to produce fast kernels for deep learning, much work remains to be done.
+Current approaches have largely focused on a narrow range of dense linear-algebra inspired operators, although it is unclear whether these operators have been chosen simply because of the ease of mapping them efficiently to hardware or because of their suitability to deep learning architectures.
+Optimizing arbitrary computation, especially on an end-to-end computation graph remains challenging, as even the subproblem of choosing how to slice the graph is nontrivial.
+
+The development of future primitives is likely stalled by these limitations, as even arbitrary ``numpy'' style scripting remains difficult for optimization.
+

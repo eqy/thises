@@ -844,11 +844,11 @@ Finally, our dynamic two-model pipeline draws inspiration from Mixture-of-Expert
 Here, our two-model pipeline can be considered a modified MoE that uses weight-sharing, with the different experts being the different resolution variations of the backbone model.
 While prior work has enforced sparse-weighting~\cite{shazeer2017outrageously} or soft-conditioning~\cite{yang2019soft} to efficiently implement the MoE, we use explicit control flow and train the scale and backbone models on separate objectives.
 
-\section{Conclusion}
-Image resolution is a fundamental hyperparameter in computer vision with ties to compute complexity, operator optimizations, and storage bandwidth.
-The best choice of resolution also depends on other choices such as crop sizes and their effect on the distribution of object scales.
-We systematically characterized the dependencies and relationships between these tradeoffs, and describe methods for maximizing efficiency with respect to compute and storage cost, encompassing both cases where resolution is a static choice and dynamic at inference time.
-
+%\section{Conclusion}
+%Image resolution is a fundamental hyperparameter in computer vision with ties to compute complexity, operator optimizations, and storage bandwidth.
+%The best choice of resolution also depends on other choices such as crop sizes and their effect on the distribution of object scales.
+%We systematically characterized the dependencies and relationships between these tradeoffs, and describe methods for maximizing efficiency with respect to compute and storage cost, encompassing both cases where resolution is a static choice and dynamic at inference time.
+%
 %\clearpage
 %\bibliographystyle{plain}
 %\bibliography{paper}

@@ -847,14 +847,6 @@ We train a type of model on a subset of pretuned-operator performance data and u
 With minimal data preprocessing (converting dataset features to one-hot encodings), we find that peak-performance on a gradient tree boosting model yields promising results.
 We expect that peak performance prediction can be integrated with performance driven NAS approaches that include with program optimization in the NAS search loop.
 
-\section{Conclusion}
-Automatic machine learning program optimization is becoming a fruitful area of research for both machine learning algorithms and downstream optimization tasks such as NAS and graph optimization.
-However, one major impediment to researchers currently working in the field is the lack of a reusable system stack spanning predefined search spaces to device-specific code generation and transparent runtimes for benchmarking implementations and prototyping optimization pipelines.
-In this paper, we presented SeaNet, which aims to fill this gap by enabling machine learning researchers to plug in their custom optimization algorithms into challenging optimization tasks.
-We presented two typical problem settings: the optimization of a collection of kernels corresponding to deep learning workloads, and peak-performance prediction for previously unseen kernels.
-Additionally, we give a detailed description of a device-portable RPC system that enables users to quickly move between different hardware devices without affecting their algorithm implementation.
-Finally, we presented evaluations of modular implementations for the tasks on various hardware devices to highlight the flexibility of the SeaNet environment.
-
 %In future work, we hope to advance the performance of the baselines further and integrate downstream tasks such as neural architecture search and graph optimizations.
 %Reusable environments for research and exploration are essential building blocks at all levels of the system stack, just as benchmarks have paved the way for much of the progress achieved in deep learning today.
 % Note use of \abovespace and \belowspace to get reasonable spacing

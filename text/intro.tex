@@ -30,8 +30,12 @@ This issue raises a fundamental question about neural network features.
 If scale is an important attribute of objects, do models explicitly capture or encode scale in their intermediate representations?
 If models indeed represent scale, then this property can potentially be leveraged to ``normalize'' the scale of objects ahead of time to improve inference performance.
 
-While intermediate activations of neural networks are typically difficult to interpret directly, we can reveal the sensitivity of activations to object scales using a model pipeline that uses neural network activations (from a pretrained model) as input and an alternative training objective.
+While intermediate activations of neural networks are typically difficult to interpret directly, we can reveal the sensitivity of activations to object scales using a model pipeline that uses neural network activations (from a pretrained model) as input and an alternative training objective intended to rank the relative scales of input examples.
 
+Using this pipeline, we can measure the predictive power of neural network activations on the ranking task to understand the extent to which activations encode scale, along with attributes corresponding to other data augmentations.
+Additionally, we can weigh the relative contributions of activations from different layers to gauge which layers encode scale information the most.
+
+As we will see later, if models capture scale information, this property enables them to discern the image resolution that maximizes inference accuracy.
 
 \paragraph{Enabling Performance at Different Resolutions}
 As alluded to previously, while the apparent scale of objects is modulated by the resolution and crop size of an input image, the true computational cost of inference given an image resolution depends on the implementation strategy of each operator in the model.
@@ -39,6 +43,9 @@ The relative efficiency of inference typically decreases with decreasing resolut
 While losses in efficiency can be partially recovered by crafting custom kernels for every operator and resolution combination, this process quickly becomes tedious and intractable given the large number of operators present in even a single model, resolution combination.
 The difficulty in handcrafting implementations is amplified by the present diversity of hardware architectures and memory hierarchies: the optimal implementation strategy will vary widely between a CPU with main memory caches and specialized vector extensions and a GPU with a large register file and high-bandwidth scratchpad memories.
 Recent work has proposed automatic compiler optimizations that use machine-learning guided search to rapidly comb through a wide range of candidate implementations, and we build on this effort to generate efficient implementations for each resolution, studying ways to reduce the time spent during the search process.
+
+More concretely, the search process for generating efficient implementations can be broken into multiple phases that each have varying strategies.
+We can separate the search process into a \emph{proposal} phase that selects potentially highly performat implementations based on prior knowledge, and a \emph{prediction} phase that estimates the performance of the proposed candidate implementations.
 
 
 \paragraph{Enabling Storage Efficiency at Different Resolutions}
@@ -55,4 +62,7 @@ With an understanding of how the choice of image resolution can be used to tune 
 As modern model architectures are agnostic to input resolution (when looking purely at input and operator shapes, rather than model quality), a natural framing of this specialization is the task of choosing the best resolution for each input image.
 From a storage perspective, the objective is to balance resolution-adjacent choices such as the crop size and image quality of each image to minimize the amount of data that needs to be read from storage.
 Additionally, we note the importance of specializing the implementation of each model for a given resolution.
+
+We propose a two-model pipeline that first predicts the optimal resolution for inference using a lightweight model followed by a larger backbone model that performs inference at the selected resolution.
+In tandem, the amount of data read from storage is calibrated to the model's preferences for image quality at each resolution, and the implementation of the model at each resolution is tuned to maximize utilization.
 
