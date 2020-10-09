@@ -136,7 +136,7 @@ Beyond program optimization, there has been tremendous progress in automatic opt
 Recent advances include automatic optimizations at the architecture~\cite{liu2018darts}~\cite{zoph2018learning}, graph~\cite{metaflow_sysml19}, kernel~\cite{NIPS2018_7599}, and hardware design levels~\cite{Koeplinger:2016:AGE:3007787.3001150}~\cite{koeplinger2018spatial}~\cite{moreau2019hardware}~\cite{8009208}, where performance is quickly becoming competitive with human engineers.
 In work where the contribution requires human insight into model architectures (e.g., resolution and model width scaling~\cite{tan2019efficientnet} or novel combinations of \emph{operators} (e.g., convolutions with different kernel sizes) ~\cite{tan2019mixnet}, it is common to see the last mile of improvement being reached with automated methods such as neural architecture search (NAS).
 However, in each subdomain of automatic optimization, there is room for standardized environments for evaluation.
-We focus on the rapidly developing line of work of kernel-level deep learning compilers~\cite{xing2019dnnvm}~\cite{222575}, where automated approaches show promise.
+We focus on the rapidly developing line of work of kernel-level deep learning compilers~\cite{xing2019dnnvm}~\cite{chen2018tvm}, where automated approaches show promise.
 
 To advance the field, automatic program optimization must support a wide range of models: the commonplace, and the cutting edge across all deep learning domains.
 However, automatic optimization research depends heavily on performance evaluation on real-world hardware.
@@ -481,7 +481,7 @@ Additionally, users are free to collect their own dataset using in-house hardwar
 \end{figure}
 The SeaNet API gives access to a rich collection of kernel implementation search spaces for common deep learning models on a wide range of hardware backends, ranging from ARM and x86 CPUs to mobile OpenCL GPUs and CUDA server-class GPUs.
 ~\autoref{fig:searchspace} gives a logical overview of an example search space.
-This search space is built on top of \emph{schedule primitives}~\cite{ragan2017halide}~\cite{222575} that describe possible optimizations to apply to kernels.
+This search space is built on top of \emph{schedule primitives}~\cite{ragan2017halide, chen2018tvm} that describe possible optimizations to apply to kernels.
 These search spaces define possible implementations of deep learning kernels for their corresponding hardware devices.
 The complexity of a search space varies depending on the target hardware device and operator, with the largest search spaces comprising billions of configurations.
 Typically, we find that search spaces for devices with intricate memory hierarchies (e..g, GPUs) have more configurations (to cover the wide variety of program implementations) and are more difficult to optimize due to the sharp performance cliffs associated with cache hierarchies.
@@ -735,7 +735,7 @@ Following the first task, we visit the second task of predicting peak performanc
 %\begin{subfigure}[]{\textwidth}
 %\includegraphics[width=0.5\textwidth]{figures/blackbox%1080tiresnet-18_7_.pdf}
 %\end{subfigure}
-\caption{Task 1: Blackbox optimization pipelines compared with cost-model driven pipelines on a convolution kernel from ResNet-18~\cite{He_2016_CVPR}. Here, the XGBoost cost model is used to filter randomly proposed configurations that are then randomly sampled. The bottom plot shows an example of an ``easier'' optimization task, where all three approaches quickly achieve good performance.}
+\caption{Task 1: Blackbox optimization pipelines compared with cost-model driven pipelines on a convolution kernel from ResNet-18~\cite{he2016deep}. Here, the XGBoost cost model is used to filter randomly proposed configurations that are then randomly sampled. The bottom plot shows an example of an ``easier'' optimization task, where all three approaches quickly achieve good performance.}
 \label{fig:blackbox}
 \end{figure}
 
