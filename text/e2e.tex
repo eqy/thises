@@ -463,7 +463,7 @@ The dynamic resolution two model pipeline does not incur a significant overhead 
 We found in early experiments that predicting scale does not require fine-grained image details, and model accuracy did not vary significantly with the capacity of the model architecture (e.g., MobileNet vs. deep ResNets). 
 In this case, the MobileNetv2 architecture used for the scale model corresponds to ~0.08 GFLOPs at $112\times112$ compared to the 1.8GFLOPs of ResNet-18 and 4.1GFLOPs of ResNet-50 at $224\times224$, an almost negligible amount of overhead.
 
-\autoref{fig:accflops_resnet_cars, fig:accflops_resnet_imagenet} shows the accuracy achieved by static and dynamic resolution approaches across a range of crop sizes on ImageNet.
+\autoref{fig:accflops_resnet_cars} and \autoref{fig:accflops_resnet_imagenet} shows the accuracy achieved by static and dynamic resolution approaches across a range of crop sizes on ImageNet.
 On the ImageNet dataset, the best static resolution for the 56\%, 75\%, and 100\% center crops was $280\times280$, as expected due to the use of random cropping during training favors slightly larger object scales.
 However, using the full crop (including \emph{more} of the image area) decreases model accuracy as object scales are biased towards smaller images.
 The two-model dynamic resolution attains most of the accuracy of the best static resolution for each approach at a lower FLOP cost, and is pareto-optimal and near the apex of accuracy for most resolution configurations.
