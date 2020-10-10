@@ -150,15 +150,65 @@
 \pagenumbering{roman}
 \pagestyle{plain}
 
+% title page
+\begin{titlepage}
+    \begin{addmargin}[-1cm]{-3cm}
+    \begin{center}
+        \large
+        \hfill
+        \vfill
+        \begingroup
+            \spacedallcaps{Systems Support for Multi-resolution} \\
+            \spacedallcaps{Deep Learning} \\ \bigskip
+        \endgroup
+        \spacedlowsmallcaps{Eddie Yan}
+        \vfill
+        A dissertation \\
+        submitted in partial fulfillment of the \\
+        requirements for the degree of \\
+        \medskip
+        \metadata{degree} \\
+        \bigskip
+        \metadata{school} \\
+        \smallskip
+        \metadata{year}
+        \vfill
+        Reading Committee: \\ 
+        \smallskip
+        Luis Ceze, Chair \\
+        \smallskip
+        Xi Wang \\
+        \smallskip
+        Zachary Tatlock \\
+        \vfill
+        Program Authorized to Offer Degree: \\
+        \smallskip
+        \metadata{department}
+    \end{center}
+  \end{addmargin}
+\end{titlepage}
+
 
 % abstract
 \cleardoublepage
 \thispagestyle{empty}
 \pdfbookmark[1]{Abstract}{Abstract}
 \begin{center}
-\TODO{fill in}
-\subimport*{text/}{abstract}
+    \spacedlowsmallcaps{Abstract} \\
+    \bigskip
+    {\color{thecolor}
+    \spacedallcaps{Systems Support for Multi-resolution} \\
+    \spacedallcaps{Deep Learning} \\
+    }
+    \bigskip
+    \metadata{author} \\
+    \bigskip
+    Chair of the Supervisory Committee: \\
+    Professor Luis Ceze \\
+    \metadata{department} \\
+    \bigskip
 \end{center}
+\subimport*{text/}{abstract}
 
 \pagenumbering{arabic}
 
