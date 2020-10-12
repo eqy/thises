@@ -2,15 +2,16 @@
 Neural networks for computer vision present a tremendous challenge for systems practictioners and researchers.
 In spite of a decade of constant progress in model architectures, perhaps the most frequent descriptor paired with neural networks is their data-hungry nature for training.
 Yet, for popular models that achieve success in a given computer vision domain, the quantity of training data is eclipsed by the amount of data seen at inference time.
-The sheer amount of data and computation required to train and execute neural networks has spawned ever-increasing efforts to tame the storage and compute appetite of neural networks.
-At present, neural network models tax storage systems, as data for training and inference often takes the form of many relatively small files (e.g., images).
-Models also tax computer architectures and their designers and users, requiring careful orchestration of memory hierachies to maximize the utilization of hardware due to the bandwidth requirements of training and inference.
 
-From a superficial glance at the storage and compute requriements of neural networks, we can infer that neural network pipelines for computer vision are staggeringly complex.
+The sheer amount of data and computation required to train and execute neural networks has spawned ever-increasing efforts to tame the storage and compute appetite of neural networks.
+Neural network models tax storage systems, as data for training and inference often takes the form of many relatively small files (e.g., images).
+As models now typically contain hundreds of millions of parameters and billions of floating point operations, they also tax computer architectures and their designers and users, requiring careful orchestration of memory hierachies to maximize the utilization of hardware due to the bandwidth requirements of training and inference.
+
+From just a superficial glance at the storage and compute requriements of neural networks, we can infer that neural network pipelines for computer vision are staggeringly complex.
 However, from this complexity, a rich set of opportunities for optimization emerges.
 Peforming neural network inference touches nearly every aspect of system design and implementation, from storage (images and image formats), to computer architecture (for kernel or operator-level optimizations), with the neural network archiecture and model execution pipeline at the highest level.
-Beginning with the singular hyperparameter of image resolution, we show methods and opportunities for enabling efficient neural network inference at multiple levels of the system stack.
 
+Starting from the singular hyperparameter of image resolution, we show methods and opportunities for enabling efficient neural network inference at multiple levels of the system stack.
 While image resolution itself is a basic concept, the choice of image resolution has a strong impact on system requirements throughout the neural network stack.
 At the most basic level, the amount of data that must be stored and read scales with image resolution.
 Model accuracy (generally) increases with image resolution.
