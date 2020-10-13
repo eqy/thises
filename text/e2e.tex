@@ -823,27 +823,27 @@ Still, using a two-model approach remains pareto-optimal in terms of accuracy vs
 
 %TODO: Lessons learned: like all thing machine learning, the best answer is likely data dependent or distribution dependent
 
-\section{Related Work}
-Improving the the computational efficiency of neural network inference (both with and without retraining) is a rapidly evolving field of research due to the high computational costs associated with modern convolutional architectures.
-Frequently, these approaches introduce a quality--computational cost or accuracy--computational tradeoff space.
-Beyond resolution, architecture agnostic approaches include exploiting quantization~\cite{rastegari2016xnor, zhou2016dorefa, fromm2020riptide}, weight pruning~\cite{ji2018tetris, frankle2018lottery}, input masking~\cite{yang2018energy}, temporal redundancy~\cite{buckler2018eva2}, model cascades~\cite{shen2017fast}, and alternative numerical representations~\cite{kim2016dynamic, lee2017energy, kalamkar2019study}.
-
-The issue of scale dependence is an area of active research with model architecture~\cite{DBLP:journals/corr/KanazawaSJ14}, finetuning~\cite{touvron2019fixing}, data augmentation~\cite{hoffer2019mix}, and equivariance-based approaches~\cite{sosnovik2019scaleequivariant} being used.
-While we present one of many possible motivations for multi-resolution models and one possible strategy for addressing the problem of scale dependence in vision models, the ability for an inference stack to flexibly switch between different image resolutions is useful.
-Even in the ideal case of fully scale-equivariant models, image resolution remains a tunable hyperparameter dictating the amount of information or fine-grained detail in image in addition to the capacity of feature maps.
-The overall approach of mapping image data to different resolutions and tuning resolution specific kernels is orthogonal to the motivation behind multi-resolution support.
-
-
-An important requirement of efficient multi-resolution support is the availability of high performance kernel implementations for each combination of resolution, model, and hardware.
-As the number of such possible combinations grows very quickly, we rely on work in automatic deep learning kernel optimizations ~\cite{ragan2013halide, chen2018tvm, zheng2020ansor, cowan2020automatic} to generate these kernels with minimal programmer effort.
-
-Specializing storage with domain-specific knowledge for either increased capacity and performance is also an active area research~\cite{sampson2014approximate, jevdjic2017approximate, mazumdar2019vignette}.
-Prior work has touched on cases where the relative importance of image data (e.g., critical format bits vs. noisy coefficient values) can be matched to storage at different levels of reliability~\cite{guo2016high, jevdjic2017approximate}.
-
-Finally, our dynamic two-model pipeline draws inspiration from Mixture-of-Experts (MoE) approaches in machine learning~\cite{jacobs1991adaptive, shazeer2017outrageously, yang2019soft, lepikhin2020gshard}, where model architectures use a weighted combination of ``experts'' to increase model capacity.
-Here, our two-model pipeline can be considered a modified MoE that uses weight-sharing, with the different experts being the different resolution variations of the backbone model.
-While prior work has enforced sparse-weighting~\cite{shazeer2017outrageously} or soft-conditioning~\cite{yang2019soft} to efficiently implement the MoE, we use explicit control flow and train the scale and backbone models on separate objectives.
-
+%\section{Related Work}
+%Improving the the computational efficiency of neural network inference (both with and without retraining) is a rapidly evolving field of research due to the high computational costs associated with modern convolutional architectures.
+%Frequently, these approaches introduce a quality--computational cost or accuracy--computational tradeoff space.
+%Beyond resolution, architecture agnostic approaches include exploiting quantization~\cite{rastegari2016xnor, zhou2016dorefa, fromm2020riptide}, weight pruning~\cite{ji2018tetris, frankle2018lottery}, input masking~\cite{yang2018energy}, temporal redundancy~\cite{buckler2018eva2}, model cascades~\cite{shen2017fast}, and alternative numerical representations~\cite{kim2016dynamic, lee2017energy, kalamkar2019study}.
+%
+%The issue of scale dependence is an area of active research with model architecture~\cite{DBLP:journals/corr/KanazawaSJ14}, finetuning~\cite{touvron2019fixing}, data augmentation~\cite{hoffer2019mix}, and equivariance-based approaches~\cite{sosnovik2019scaleequivariant} being used.
+%While we present one of many possible motivations for multi-resolution models and one possible strategy for addressing the problem of scale dependence in vision models, the ability for an inference stack to flexibly switch between different image resolutions is useful.
+%Even in the ideal case of fully scale-equivariant models, image resolution remains a tunable hyperparameter dictating the amount of information or fine-grained detail in image in addition to the capacity of feature maps.
+%The overall approach of mapping image data to different resolutions and tuning resolution specific kernels is orthogonal to the motivation behind multi-resolution support.
+%
+%
+%An important requirement of efficient multi-resolution support is the availability of high performance kernel implementations for each combination of resolution, model, and hardware.
+%As the number of such possible combinations grows very quickly, we rely on work in automatic deep learning kernel optimizations ~\cite{ragan2013halide, chen2018tvm, zheng2020ansor, cowan2020automatic} to generate these kernels with minimal programmer effort.
+%
+%Specializing storage with domain-specific knowledge for either increased capacity and performance is also an active area research~\cite{sampson2014approximate, jevdjic2017approximate, mazumdar2019vignette}.
+%Prior work has touched on cases where the relative importance of image data (e.g., critical format bits vs. noisy coefficient values) can be matched to storage at different levels of reliability~\cite{guo2016high, jevdjic2017approximate}.
+%
+%Finally, our dynamic two-model pipeline draws inspiration from Mixture-of-Experts (MoE) approaches in machine learning~\cite{jacobs1991adaptive, shazeer2017outrageously, yang2019soft, lepikhin2020gshard}, where model architectures use a weighted combination of ``experts'' to increase model capacity.
+%Here, our two-model pipeline can be considered a modified MoE that uses weight-sharing, with the different experts being the different resolution variations of the backbone model.
+%While prior work has enforced sparse-weighting~\cite{shazeer2017outrageously} or soft-conditioning~\cite{yang2019soft} to efficiently implement the MoE, we use explicit control flow and train the scale and backbone models on separate objectives.
+%
 %\section{Conclusion}
 %Image resolution is a fundamental hyperparameter in computer vision with ties to compute complexity, operator optimizations, and storage bandwidth.
 %The best choice of resolution also depends on other choices such as crop sizes and their effect on the distribution of object scales.
