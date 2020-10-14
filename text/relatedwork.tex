@@ -31,6 +31,9 @@ As the number of such possible combinations grows very quickly, we rely on work 
 Specializing storage with domain-specific knowledge for either increased capacity and performance is also an active area research~\cite{sampson2014approximate, jevdjic2017approximate, mazumdar2019vignette}.
 Prior work has touched on cases where the relative importance of image data (e.g., critical format bits vs. noisy coefficient values) can be matched to storage at different levels of reliability~\cite{guo2016high, jevdjic2017approximate}.
 
+At training time, retaining the intermediate activations of models for backpropgation can become problematic from a memory capacity perspective.
+Here, recomputation~\cite{chen2016xgboost, kirisame2020dynamic} can be used to favorably trade additional computation for memory storage requirements when training large models.
+
 \paragraph{Mixture of Experts Models}
 We draw inspiration from Mixture-of-Experts (MoE) approaches in machine learning~\cite{jacobs1991adaptive, shazeer2017outrageously, yang2019soft, lepikhin2020gshard}, where model architectures use a weighted combination of ``experts'' to increase model capacity.
 Here, our two-model pipeline can be considered a modified MoE that uses weight-sharing, with the different experts being the different resolution variations of the backbone model.
@@ -55,25 +58,25 @@ Dynamic resizing has also been used by Flickr~\cite{flickr} and Facebook~\cite{h
 Finally, progressive JPEG has been recently used by Facebook~\cite{fasterfacebook} to reduce data consumption and speed up the apparent loading of images on the client side; the latter is achieved by rendering an acceptable quality scan before all scans have been transmitted. However, this approach does not involve dynamic resizing or customizing progressive JPEG\@.
 
 \paragraph{Optimizing Deep Learning Workloads}
-SeaNet presents an environment for deep learning kernel optimization; this environment can be analogous to simulation environments for reinforcement learning agents, where researchers can prototype ideas and algorithms without needing to build a virtual or physical world from scratch.
+We present an environment for deep learning kernel optimization; this environment can be analogous to simulation environments for reinforcement learning agents, where researchers can prototype ideas and algorithms without needing to build a virtual or physical world from scratch.
 Ray~\cite{222605} is an analogous environment for reinforcement learning.
-SeaNet differs in its performance-driven objective that can leverage measurements on real hardware and the ready availability of out-of-the-box benchmarks (e.g., reference workloads such as popular computer vision models).
+Our approach differs in its performance-driven objective that can leverage measurements on real hardware and the ready availability of out-of-the-box benchmarks (e.g., reference workloads such as popular computer vision models).
 Park~\cite{mao2019park} is an environment for reinforcement learning-based optimization for general systems challenges, such as device placement, circuit design, and load balancing.
 While reinforcement learning can also be applied to the challenge of automatic kernel optimization, we focus on providing generic support for optimization pipelines for a wide breadth of hardware devices and kernels.
 Similarly, Vizier~\cite{golovin2017google} presents an optimization service for general blackbox functions.
-The SeaNet environment can be viewed as a Vizier-like service for whitebox deep learning kernels where support for experimenting with the optimization algorithms themselves is a design goal.
+The proposed environment can be viewed as a Vizier-like service for whitebox deep learning kernels where support for experimenting with the optimization algorithms themselves is a design goal.
 
 
-On the benchmark front, SeaNet is analogous to recent work such as NAS-Bench-101~\cite{pmlr-v97-ying19a} which provides a reference dataset for NAS alongside benchmark tasks.
+On the benchmark front, our environemnt is analogous to recent work such as NAS-Bench-101~\cite{pmlr-v97-ying19a} which provides a reference dataset for NAS alongside benchmark tasks.
 However, we while we provide a dataset, we do not settle on a fixed dataset as hardware targets and models are continuously evolving.
-SeaNet benchmark tasks have a similar flavor to the NAS-Bench tasks, as neural architecture search presents a discrete optimization problem similar in structure to that of program optimization.
+Our benchmark tasks have a similar flavor to the NAS-Bench tasks, as neural architecture search presents a discrete optimization problem similar in structure to that of program optimization.
 Concretely, the main differences are in the feasibility of evaluation (seconds vs. hours to evaluate candidates), and the objectives (performance vs. validation accuracy).
-Additionally, we encourage SeaNet users to collect performance data and run experiments on hardware that they have available, whereas this may not be feasible for NAS-Bench tasks.
+Additionally, we encourage users to collect performance data and run experiments on hardware that they have available, whereas this may not be feasible for NAS-Bench tasks.
 However, it is entirely possible that variations of successful kernel optimization algorithms and pipelines can be successfully applied to neural architecture search, and we hope to see cross-pollination across the problems.
 
 
 The task of automatic program optimization is not new, and has been recently visited with several different approaches, such as analytical models~\cite{mullapudi2016automatically}, statistical cost model guided search~\cite{NIPS2018_7599}, tree search~\cite{Adams2019LearningTO}, static cost models~\cite{Kim:2019:CGH:3314872.3314885}, and statistical cost models driven by handpicked features~\cite{Li:2018:DPI}.
-SeaNet aims to provide a flexible framework for researchers to explore new innovations.
+We aim to provide a flexible framework for researchers to explore new innovations.
 %Differences (performance driven), and measurements also happen on real hardware (are feasible) vs. difficulty of deploying agents to real environments.
 %SeaNet presents both an \emph{environment} for automatic optimization experiments, and a \emph{dataset} for prototyping.
 Additionally, parallel work on machine learning for systems work includes automatic device placement~\cite{mirhoseini2017device}, graph optimization~\cite{metaflow_sysml19}, parallelization~\cite{soap_sysml19}, architecture search~\cite{tan2019mnasnet}~\cite{zoph2018learning}, among others. 

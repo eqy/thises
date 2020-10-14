@@ -51,7 +51,10 @@ The difficulty in handcrafting implementations is amplified by the present diver
 Recent work has proposed automatic compiler optimizations that use machine-learning guided search to rapidly comb through a wide range of candidate implementations, and we build on this effort to generate efficient implementations for each resolution, studying ways to reduce the time spent during the search process.
 
 More concretely, the search process for generating efficient implementations can be broken into multiple phases that each have varying strategies.
-We can separate the search process into a \emph{proposal} phase that selects potentially highly performat implementations based on prior knowledge, and a \emph{prediction} phase that estimates the performance of the proposed candidate implementations.
+We can separate the search process into a \emph{proposal} phase that selects potentially highly performant implementations based on prior knowledge, and a \emph{prediction} phase that estimates the performance of the proposed candidate implementations.
+This separation enables a modular pipeline where the performance of different proposal and prediction strategies can be compared which each have distinctly important roles in the search pipeline.
+Proposal strategies must balance exploitation (choosing kernel configurations that are likely to be good) and exploration (choosing kernel configurations that are from underexplored regions of the space.
+Prediction strategies should balance the accuracy and compute cost of the prediction model: at the extreme end of compute cost, it would be cheaper to measure the performance of configuration on actual hardware than to use a prediction model.
 
 
 \paragraph{Enabling Storage Efficiency at Different Resolutions}
