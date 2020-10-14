@@ -1,18 +1,25 @@
 \section{Introduction}
 Images are ubiquitous on the modern web. 
 With the rapid expansion of social media services, the largest social media networks now host billions of images~\cite{huang2013analysis}.
+At the same time, neural network datasets are rapidly growing in scale, with the 1.2 million image ImageNet dataset~\cite{russakovsky2015imagenet} being eclipsed by JFT-300M~\cite{sun2017revisiting}.
+
 Image hosts face the challenge of handling the massive rates at which users upload images, especially as scaling of cost per gigabyte slows~\cite{gupta-mascots14}. 
 This issue is compounded by the need to store each image at multiple resolutions to support different contexts or devices. 
 In 2010, Facebook stored up to 4 different versions of each image~\cite{beaver2010finding}, later reporting that \emph{dynamic resizing} was also performed~\cite{huang2013analysis}.
 \emph{dynamic resizing} saves capacity by generating low resolution copies of images on the fly without committing them to storage.
-
 Faced with a similar problem, Flickr~\cite{flickr} switched to dynamic resizing and reported that doing so helped to eliminate the need for storage capacity upgrades for an entire year. 
+
+Image resolution is also a hyperparameter for neural network training and inference.
+While neural networks are typically trained at a fixed resolution, the use of global average pooling in modern architectures makes them resolution-agnostic from a shape-correctness perspective.
+Enabling flexibility of resolution at inference time can dedicate more computation to difficult images that require more detail (or as we will later see, choose the best object scale for inference).
+However, this again requires loading different resolutions of images for inference, analogous to serving different resolution versions of images to users in different contexts.
+
 While dynamic resizing is an attractive method for reducing storage overheads, it introduces two main trade-offs. 
 First, computation is traded for capacity: when an uncached image is requested, the image must be decoded and resized.
 Second and perhaps more importantly, bandwidth is traded for capacity: reading the entire source image for resizing can waste bandwidth.
 Bandwidth can be precious in cold storage scenarios that sacrifice performance for cost and density~\cite{black2016feeding} or when an access misses in the cache.
 
-This paper proposes repurposing \emph{progressive JPEG} to reduce both read bandwidth and storage overheads.
+We propose repurposing \emph{progressive JPEG} to reduce both read bandwidth and storage overheads.
 %
 The progressive JPEG standard specifies a variant of JPEG images originally designed for bandwidth-constrained networks.
 In a progressive JPEG image, image data is partitioned and arranged by frequency content instead of by vertical position in an image (scanline), allowing for a lossy preview before the entire image has been downloaded.
