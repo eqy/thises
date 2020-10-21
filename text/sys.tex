@@ -352,7 +352,7 @@ We show an example of a model optimizer in listing ~\autoref{lst:modeloptimizer}
 %linenos
 %]
 %{python}
-\begin{lstlisting}[caption={Simple example of a naive random model optimizer. A reference to a cost model is passed as \emph{model}, the number of proposals is specified with \emph{num}, and \emph{excl} contains a set of any points in the search space that should be excluded from consideration.},label={lst:modeloptimizer},language=Python]
+\begin{lstlisting}[caption={Simple example of a naive random model optimizer. A reference to a cost model is passed as \emph{model}, the number of proposals is specified with \emph{num}, and \emph{excl} contains a set of any points in the search space that should be excluded from consideration.},label={lst:modeloptimizer},language=Python,float,floatplacement=H]
 def find_maximums(self, model, num, excl):
     self.visited = set()
     size = len(self.task.config_space)
@@ -397,7 +397,7 @@ We show a sample implementation of a cost model in listing ~\autoref{lst:costmod
 %linenos
 %]
 %{python}
-\begin{lstlisting}[caption={Simplified example of a gradient tree boosting cost model using the XGBoost~\cite{chen2016xgboost} library. \texttt{\_get\_feature} can be any function that presents an arbitrary feature representation to the cost model. For example, this representation may simply be a concatenation of the choices, an AST representation of the lowered code, or a dataflow graph of operations.}, label={lst:costmodel}, language=Python]
+\begin{lstlisting}[caption={Simplified example of a gradient tree boosting cost model using the XGBoost~\cite{chen2016xgboost} library. \texttt{\_get\_feature} can be any function that presents an arbitrary feature representation to the cost model. For example, this representation may simply be a concatenation of the choices, an AST representation of the lowered code, or a dataflow graph of operations.}, label={lst:costmodel}, language=Python,float,floatplacement=H]
 def fit(self, xs, ys,...):
     x_train = self._get_feature(xs)
     y_train = np.array(ys)
@@ -435,7 +435,7 @@ We show an example of a sampler in listing ~\autoref{lst:sampler}.
 %linenos
 %]
 %{python}
-\begin{lstlisting}[caption={Example of a $k$-means clustering based sampler that attempts to achieve sample diversity. Points refers to the current proposed set of configurations, scores are their corresponding scores as given by a cost model, and the plan size is the number of points (configurations) that should be selected for measurement.},label={lst:sampler},language=Python]
+\begin{lstlisting}[caption={Example of a $k$-means clustering based sampler that attempts to achieve sample diversity. Points refers to the current proposed set of configurations, scores are their corresponding scores as given by a cost model, and the plan size is the number of points (configurations) that should be selected for measurement.},label={lst:sampler},language=Python,float,floatplacement=H]
 def sample(self, points, scores, plan_size):
     #convert configuration index to coordinates
     X = [point2knob(point, self.dims)
