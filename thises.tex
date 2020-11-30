@@ -89,7 +89,7 @@
 \hyphenation{analy-ses analy-sis proto-type}
 
 % ToC fonts!
-\definecolor{thecolor}{RGB}{38,90,18}
+\definecolor{thecolor}{RGB}{32,32,32}
 \renewcommand\cftpartfont{\normalfont\color{thecolor}}
 \renewcommand\cftpartpagefont{\normalfont\color{thecolor}}
 
@@ -212,20 +212,29 @@
 
 \pagenumbering{arabic}
 
+\cleardoublepage
+\pdfbookmark[1]{Acknowledgements}{acknowledgements}
+\chapter*{Acknowledgements}
+\subimport*{text/}{acknowledgements}
+
 \chapter{Introduction}
 \subimport*{text/}{intro}
 \chapter{Related Work}
 \subimport*{text/}{relatedwork}
 \chapter{What do computer vision model features encode?}
+\label{ch:augmentations}
 \subimport*{text/}{augmentations}
 
 \chapter{Leveraging Image Resolution for Efficient Storage}
+\label{ch:storage}
 \subimport*{text/}{storage}
 
-\chapter{Tuning The Tuning of Computer Vision Kernels}
+\chapter{Tuning Pipelines for Computer Vision Kernels}
+\label{ch:sys}
 \subimport*{text/}{sys}
 
 \chapter{End-to-End Resolution and Model Co-optimization}
+\label{ch:e2e}
 \subimport*{text/}{e2e}
 
 \chapter{Conclusion}
