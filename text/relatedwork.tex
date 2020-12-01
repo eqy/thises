@@ -17,7 +17,7 @@ Approaches include finetuning the model after quantization and specializing the 
 Finally, we note the importance of matching quantization schemes to hardware/software friendly approaches in realizing theoretical performance gains in real applications.
 
 \paragraph{Neural Networks and Image Resolution}
-The issue of scale dependence is an area of active research with model architecture~\cite{DBLP:journals/corr/KanazawaSJ14}, finetuning~\cite{touvron2019fixing}, data augmentation~\cite{hoffer2019mix}, and equivariance-based approaches~\cite{sosnovik2019scaleequivariant} being used.
+The issue of scale dependence (often stemming from variations in image resolution) is an area of active research with model architecture~\cite{DBLP:journals/corr/KanazawaSJ14}, finetuning~\cite{touvron2019fixing}, data augmentation~\cite{hoffer2019mix}, and equivariance-based approaches~\cite{sosnovik2019scaleequivariant} being used.
 While we present one of many possible motivations for multi-resolution models and one possible strategy for addressing the problem of scale dependence in vision models, the ability for an inference stack to flexibly switch between different image resolutions is useful.
 Even in the ideal case of fully scale-equivariant models, image resolution remains a tunable hyperparameter dictating the amount of information or fine-grained detail in image in addition to the capacity of feature maps.
 The overall approach of mapping image data to different resolutions and tuning resolution specific kernels is orthogonal to the motivation behind multi-resolution support.
@@ -58,7 +58,7 @@ Dynamic resizing has also been used by Flickr~\cite{flickr} and Facebook~\cite{h
 Finally, progressive JPEG has been recently used by Facebook~\cite{fasterfacebook} to reduce data consumption and speed up the apparent loading of images on the client side; the latter is achieved by rendering an acceptable quality scan before all scans have been transmitted. However, this approach does not involve dynamic resizing or customizing progressive JPEG\@.
 
 \paragraph{Optimizing Deep Learning Workloads}
-We present an environment for deep learning kernel optimization; this environment can be analogous to simulation environments for reinforcement learning agents, where researchers can prototype ideas and algorithms without needing to build a virtual or physical world from scratch.
+To tune deep learning kernels, we present an environment for deep learning kernel optimization; this environment can be analogous to simulation environments for reinforcement learning agents, where researchers can prototype ideas and algorithms without needing to build a virtual or physical world from scratch.
 Ray~\cite{222605} is an analogous environment for reinforcement learning.
 Our approach differs in its performance-driven objective that can leverage measurements on real hardware and the ready availability of out-of-the-box benchmarks (e.g., reference workloads such as popular computer vision models).
 Park~\cite{mao2019park} is an environment for reinforcement learning-based optimization for general systems challenges, such as device placement, circuit design, and load balancing.
