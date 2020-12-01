@@ -1,9 +1,10 @@
-\section{Limitations and Future Work}
+%\section{Limitations and Future Work}
 %\subsection{Limitations}
-A limitation of our current implementation is the cost of evaluating custom scan configurations.
+A limitation of our current storage implementation is the cost of evaluating custom scan configurations.
 Our na\"{i}ve implementation takes days to process 24,988 images on 8 cluster nodes (12 cores/12 threads per node) with Westmere-class CPUs. 
-We suspect that this time can drastically reduced without sacrificing significant bandwidth savings by aggressively pruning the search space or applying machine learning techniques to choose scan configurations.
-Note that while the customization process for progressive JPEG is currently expensive, it only needs to be performed once, at write time. 
+Due to this computational cost, for our end-to-end evaluation in ~\autoref{ch:e2e}, we used the default scan configuration to estimate the storage bandwidth requirements for each approach.
+However, we suspect that this time can drastically reduced without sacrificing significant bandwidth savings by aggressively pruning the search space or applying machine learning techniques to choose scan configurations.
+While the customization process for progressive JPEG is currently expensive, it only needs to be performed once, at write time. 
 
 The PSNR metric is limited in its relevance to perceived visual quality~\cite{wang2002no}.
 We often found that the PSNR of higher resolution resizes was higher than that of lower resolution resizes even with less image data read---this issue may be mitigated with conservative PSNR thresholds.
