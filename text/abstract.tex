@@ -1,8 +1,13 @@
-Computer vision systems implicitly depend on a variety of parameter choices affecting metrics such as model accuracy, inference latency, and storage bandwidth utilization.
-Often, these choices are made in isolation or statically, when the ideal choices may require joint tuning or be data-dependent.
-At the same time, the network models underpinning modern computer vision systems are highly sensitive to the distribution of data seen at training time.
+Modern computer vision systems are built upon a complex stack of hardware and software, from general purpose processors to specialized accelerators, and low level operator libraries to expressive deep learning frameworks.
+However, from this complexity arises many opportunities for optimization across the stack.
+From the lens of image resolution, a fundamental hyperparameter of computer vision, we propose methods for optimizing models and characterize the space of choices as introduced by the hyperparameter of resolution.
+%Computer vision systems implicitly depend on a variety of parameter choices affecting metrics such as model accuracy, inference latency, and storage bandwidth utilization.
+%Often, these choices are made in isolation or statically, when the ideal choices may require joint tuning or be data-dependent.
+%At the same time, the network models underpinning modern computer vision systems are highly sensitive to the distribution of data seen at training time.
 
-We study relationship between this data distribution as mediated by the choice of data augmentations at training time and the internal representation learned by neural networks.
-From this understanding of what neural network representations encode, we propose tuning several parameter choices in tandem.
-Together, these parameters determine the neural network's computational cost, latency, accuracy, and storage bandwidth use.
-We describe the mechanisms by which we enable efficient inference from the lens of these metrics, spanning kernel tuning, image data layout, and model architecture pipelines.
+In the process, we cover related topics such as object scale (as introduced by data augmentations), image storage (including methods for efficient multi-resolution storage), and deep learning kernel tuning.
+An understanding of these topics allows us to consider resolution with respect to deep learning choices holistically, enabling efficient inference from the metrics of computational cost, latency, accuracy, and storage bandwidth use.
+%We study the relationship between this data distribution as mediated by the choice of data augmentations at training time and the internal representation learned by neural networks.
+%From this understanding of what neural network representations encode, we propose tuning several parameter choices in tandem.
+%Together, these parameters determine the neural network's computational cost, latency, accuracy, and storage bandwidth use.
+We describe the mechanisms by which we enable efficient inference according to these metrics, spanning kernel tuning, image data layout, and model architecture pipelines.
