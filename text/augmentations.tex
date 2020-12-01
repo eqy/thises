@@ -357,8 +357,8 @@ For the DCT baseline, we apply average pooling to the DCT features while the spa
 
 
 \subsection{Ranking Model and Training Pipeline}
-\begin{figure}[t]
-\includegraphics[width=\textwidth]{diagrams/ranking.png}
+\begin{figure}[tb]
+\includegraphics[width=0.7\textwidth]{diagrams/ranking.png}
 \caption{Backbone and ranking model used in our evaluation. The backbone model is a pre-trained CNN (such as ResNet-18), with parameters frozen. The activations from the backbone are average-pooled to align their spatial dimensions and fed to a linear layer that produces a score for the ranking objective.}
 \label{fig:ranking}
 \end{figure}
@@ -400,7 +400,7 @@ Other augmentations, such as hue and saturation, may present cues in the absolut
 
 \begin{table}[t]
 \begin{center}
-\begin{tabularx}{\textwidth}{  | >{\raggedright\arraybackslash}X 
+\begin{tabularx}{0.8\textwidth}{  | >{\raggedright\arraybackslash}X 
   | >{\centering\arraybackslash}X 
   | >{\raggedleft\arraybackslash}X |} 
  \hline
@@ -415,7 +415,7 @@ Other augmentations, such as hue and saturation, may present cues in the absolut
  ResNet-50 & 90.8 & 84.9 \\ 
  \hline
 \end{tabularx}
-\begin{tabularx}{\textwidth}{  | >{\raggedright\arraybackslash}X 
+\begin{tabularx}{0.8\textwidth}{  | >{\raggedright\arraybackslash}X 
   | >{\centering\arraybackslash}X 
   | >{\raggedleft\arraybackslash}X |} 
  \hline
@@ -430,7 +430,7 @@ Other augmentations, such as hue and saturation, may present cues in the absolut
  ResNet-50 & 77.6 & 64.8 \\ 
  \hline
 \end{tabularx}
-\begin{tabularx}{\textwidth}{  | >{\raggedright\arraybackslash}X 
+\begin{tabularx}{0.8\textwidth}{  | >{\raggedright\arraybackslash}X 
   | >{\centering\arraybackslash}X 
   | >{\raggedleft\arraybackslash}X |} 
  \hline
@@ -445,7 +445,7 @@ Other augmentations, such as hue and saturation, may present cues in the absolut
  ResNet-50 & 85.9 & \textbf{81.3} \\ 
  \hline
 \end{tabularx}
-\begin{tabularx}{\textwidth}{  | >{\raggedright\arraybackslash}X 
+\begin{tabularx}{0.8\textwidth}{  | >{\raggedright\arraybackslash}X 
   | >{\centering\arraybackslash}X 
   | >{\raggedleft\arraybackslash}X |} 
  \hline
@@ -460,7 +460,7 @@ Other augmentations, such as hue and saturation, may present cues in the absolut
  ResNet-50 & 84.0 & 66.0 \\ 
  \hline
 \end{tabularx}
-\begin{tabularx}{\textwidth}{  | >{\raggedright\arraybackslash}X 
+\begin{tabularx}{0.8\textwidth}{  | >{\raggedright\arraybackslash}X 
   | >{\centering\arraybackslash}X 
   | >{\raggedleft\arraybackslash}X |} 
  \hline
@@ -475,7 +475,7 @@ Other augmentations, such as hue and saturation, may present cues in the absolut
  ResNet-50 & 95.2 & 94.0 \\ 
  \hline
 \end{tabularx}
-\begin{tabularx}{\textwidth}{  | >{\raggedright\arraybackslash}X 
+\begin{tabularx}{0.8\textwidth}{  | >{\raggedright\arraybackslash}X 
   | >{\centering\arraybackslash}X 
   | >{\raggedleft\arraybackslash}X |} 
  \hline
@@ -490,7 +490,7 @@ Other augmentations, such as hue and saturation, may present cues in the absolut
  ResNet-50 & 99.7 & 99.7\\ 
  \hline
 \end{tabularx}
-\begin{tabularx}{\textwidth}{  | >{\raggedright\arraybackslash}X 
+\begin{tabularx}{0.8\textwidth}{  | >{\raggedright\arraybackslash}X 
   | >{\centering\arraybackslash}X 
   | >{\raggedleft\arraybackslash}X |} 
  \hline
@@ -550,14 +550,14 @@ More surprisingly, however, was that while the early layers were favored especia
 \label{sec:importance}
 \begin{figure*}
 \begin{center}
-\begin{subfigure}[h]{0.8\textwidth}
+\begin{subfigure}[tb]{0.7\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/resnet18_mean_new.png}
     \caption{}
     \label{fig:resnet18_mean}
 \end{subfigure}
 %\hspace{0.5in}
-\begin{subfigure}[h]{0.8\textwidth}
+\begin{subfigure}[tb]{0.7\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/resnet18_max_new.png}
     \caption{}
@@ -568,14 +568,14 @@ More surprisingly, however, was that while the early layers were favored especia
 \begin{figure*}
 \ContinuedFloat
 \begin{center}
-\begin{subfigure}[h]{0.8\textwidth}
+\begin{subfigure}[tb]{0.7\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/resnet50_mean_new.png}
     \caption{}
     \label{fig:resnet50_mean}
 \end{subfigure}
 %\hspace{0.5in}
-\begin{subfigure}[h]{0.8\textwidth}
+\begin{subfigure}[tb]{0.7\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/resnet50_max_new.png}
     \caption{}
@@ -608,7 +608,7 @@ Indeed,~\autoref{tab:halfs} shows this drop, suggesting that even if neural netw
 
 \begin{table}[tb]
 \begin{center}
-\begin{tabularx}{\textwidth}{  | >{\raggedright\arraybackslash}X 
+\begin{tabularx}{0.8\textwidth}{  | >{\raggedright\arraybackslash}X 
   | >{\centering\arraybackslash}X 
   | >{\raggedleft\arraybackslash}X |} 
  \hline
@@ -633,7 +633,7 @@ Indeed,~\autoref{tab:halfs} shows this drop, suggesting that even if neural netw
  ResNet-18 Block 6& 87.5 & 82.9\\
  \hline
 \end{tabularx}
-\begin{tabularx}{\textwidth}{  | >{\raggedright\arraybackslash}X 
+\begin{tabularx}{0.8\textwidth}{  | >{\raggedright\arraybackslash}X 
   | >{\centering\arraybackslash}X 
   | >{\raggedleft\arraybackslash}X |} 
  \hline
@@ -658,7 +658,7 @@ Indeed,~\autoref{tab:halfs} shows this drop, suggesting that even if neural netw
  ResNet-18 Block 6& 66.7 & 62.8 \\
  \hline
 \end{tabularx}
-\begin{tabularx}{\textwidth}{  | >{\raggedright\arraybackslash}X 
+\begin{tabularx}{0.8\textwidth}{  | >{\raggedright\arraybackslash}X 
   | >{\centering\arraybackslash}X 
   | >{\raggedleft\arraybackslash}X |} 
  \hline
@@ -738,11 +738,11 @@ The lack of improvement seems to support the hypothesis that the ability to enco
 
 
 
-\paragraph{Limitations and future work}
+\paragraph{Model Selection and Design}
 In using a simple linear layer to build our ranking model, we sacrifice model performance for interpretability.
 It may be entirely possible that with sufficient representation power in the ranking model, data augmentation transformations can be recovered with high accuracy using only deep network layers.
 Still, we believe that using a linear ranking model reveals that augmentation transformations are prominent in neural network features in early layers.
-A natural extension of this work would include novel model architectures and augmentations.
+%A natural extension of this work would include novel model architectures and augmentations.
 %In the future, we believe it will be interesting to revisit this approach with new model architectures and augmentation techniques.
 %\section{Conclusion}
 %We posed the question of whether modern CNNs encode attributes corresponding to popular data augmentations  such as color and scale transformations.
