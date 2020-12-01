@@ -23,6 +23,8 @@ Optimizing arbitrary computation, especially on an end-to-end computation graph 
 Perhaps the clearest example of "slicing" the graph is the current dichotomy between "graph optimization" and "kernel optimization."
 Current approaches have demonstrated clear benefits by partioning different kernels in deep learning computation graphs.
 However, these approaches still consider deep learning kernels as indivisible black boxes to tame the search spaceof possible and valid rewrites.
+The development of future primitives is likely hamstrung by these limitations, as even arbitrary ``numpy'' style scripting remains difficult for optimization.
 
-The development of future primitives is likely stalled by these limitations, as even arbitrary ``numpy'' style scripting remains difficult for optimization.
-
+Finally, the need for any human insight into the structure of kernel implementations appears unsatisfying in the presence of ``tabula rasa''~\cite{silver2017mastering} approaches for reinforcement learning.
+Even in the absence of template driven approaches, current state-of-the-art tuning methods require a considerable amount of human insight to design the search space~\cite{zheng2020ansor} or promising transformations available to the optimizer.
+Ideally, to minimize programmer effort and maximize generalization, a ``tabular rasa'' approach would allow for competitive optimizations without specifying a constrained search space or narrow set of availble transformations tailored to specific architectures ahead of time.
