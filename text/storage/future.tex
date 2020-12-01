@@ -16,8 +16,8 @@ Progressive JPEG is less efficient in terms of read bandwidth for resizes smalle
 This threshold is due to JPEG's use of $8\times8$ macroblocks: even a single frequency coefficient represents at least $\frac{1}{64}$ of the total image data.
 Even when approximations are used, this approach may require more read bandwidth than pre-resized images.
 Still, using progressive JPEG should be more space-efficient than baseline JPEG for dynamic resizing.
+%\paragraph{Future Work}
 
-\paragraph{Future Work}
 We expect that a solution to reduce the cost of enumerating custom JPEG scan configurations will be to prune the search space to a much smaller subset of likely ``good'' configurations.
 It may be possible to obtain comparable results by only trying a few custom scan
 configurations per image---with this subset being determined by identifying the best configurations when na\"{i}vely re-encoding a larger dataset of images.

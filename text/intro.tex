@@ -42,6 +42,7 @@ Using this pipeline, we can measure the predictive power of neural network activ
 Additionally, we can weigh the relative contributions of activations from different layers to gauge which layers encode scale information the most.
 
 As we will see later, if models capture scale information, this property enables them to discern the image resolution that maximizes inference accuracy.
+\autoref{ch:augmentations} studies the effect of scale (due to cropping) alongside other augmentations from the perspective of neural network activations.
 
 \paragraph{Enabling Performance at Different Resolutions}
 As alluded to previously, while the apparent scale of objects is modulated by the resolution and crop size of an input image, the true computational cost of inference given an image resolution depends on the implementation strategy of each operator in the model.
@@ -55,6 +56,7 @@ We can separate the search process into a \emph{proposal} phase that selects pot
 This separation enables a modular pipeline where the performance of different proposal and prediction strategies can be compared which each have distinctly important roles in the search pipeline.
 Proposal strategies must balance exploitation (choosing kernel configurations that are likely to be good) and exploration (choosing kernel configurations that are from underexplored regions of the space.
 Prediction strategies should balance the accuracy and compute cost of the prediction model: at the extreme end of compute cost, it would be cheaper to measure the performance of configuration on actual hardware than to use a prediction model.
+\autoref{ch:storage} evaluates various proposal and prediction pipelines for automatic search of machine learning kernels.
 
 
 \paragraph{Enabling Storage Efficiency at Different Resolutions}
@@ -64,6 +66,7 @@ While the motivation for serving multiple resolution versions (images are shown 
 By leveraging properties of frequency domain representations that are common in popular image formats, we can specialize the data layout of images to match the desired resolutions.
 Specializing the data layout requires only a single copy of each image, without redundant lossy copies for lower resoution or quality versions.
 For neural network inference, this enables reading a different relative fraction of each image's total data for inference at a per-example granularity, without modification to the downstream neural network pipeline.
+\autoref{ch:storage} describes the methods and evaluates multi-resolution image storage via frequency domain data layouts.
 
 
 \paragraph{End-to-End Specialization for Resolution}
@@ -74,4 +77,5 @@ Additionally, we note the importance of specializing the implementation of each 
 
 We propose a two-model pipeline that first predicts the optimal resolution for inference using a lightweight model followed by a larger backbone model that performs inference at the selected resolution.
 In tandem, the amount of data read from storage is calibrated to the model's preferences for image quality at each resolution, and the implementation of the model at each resolution is tuned to maximize utilization.
+\autoref{ch:e2e} provides more details on end-to-end approaches on specializing for image resolution.
 
