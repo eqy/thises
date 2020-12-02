@@ -364,7 +364,7 @@ For lower resolution inference, we find the ideal operating point to be $168\tim
 
 \subsection{Accuracy vs. FLOPs}
 \label{sec:accflops}
-\begin{figure*}[t]
+\begin{figure*}[h!]
     \centering
     \begin{tabular}{@{}c@{}}
     \includegraphics[width=0.45\textwidth]{e2e_figures/imagenet_resnet18_25_center.pdf} \\
@@ -409,7 +409,7 @@ For lower resolution inference, we find the ideal operating point to be $168\tim
     \caption{Accuracy vs. FLOPs comparison with static and dynamic resolution approaches using ResNet-18 (a-d)and 50 (e-h) on ImageNet. Crop sizes increase from left to right from 25\% on the left to 100\% on the right. Smaller crops favor lower resolutions more, while larger crops favor higher resolutions due to the models' dependence on object scale. The dynamic resolution approach operates at nearly the apex of every pareto curve, without hardcoding resolution.}
     \label{fig:accflops_resnet_imagenet}
 \end{figure*}
-\begin{figure*}[t]
+\begin{figure*}[h!]
     \centering
     \begin{tabular}{@{}c@{}}
     \includegraphics[width=0.45\textwidth]{e2e_figures/cars_resnet18_25_center.pdf} \\
@@ -495,7 +495,7 @@ Overall, however, we find that calibration generalizes well from the training se
 These results indicate that the savings depends on the classification task (the relevance of fine details for accuracy), as well as the distribution of resolution among the input resolutions.
 We note that both the Cars and ImageNet dataset contain images only modestly higher resolution than $448\times448$ on average.
 
-\begin{sidewaystable*}[t]
+\begin{sidewaystable*}[htb]
     \centering
     \begin{tabular}{c|}
     ImageNet\\
@@ -635,7 +635,7 @@ We note that both the Cars and ImageNet dataset contain images only modestly hig
 \end{sidewaystable*}
 
 
-\begin{sidewaystable*}[t]
+\begin{sidewaystable*}[htb]
     \centering
     \begin{tabular}{c|}
     Cars \\
