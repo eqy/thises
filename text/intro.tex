@@ -17,7 +17,7 @@ However, from this complexity, a rich set of opportunities for optimization emer
 Peforming neural network inference touches nearly every aspect of system design and implementation, from storage (images and image formats), to computer architecture (for kernel or operator-level optimizations), with the neural network archiecture and model execution pipeline at the highest level.
 
 Starting from the singular hyperparameter of image resolution, we show methods and opportunities for enabling efficient neural network inference at multiple levels of the system stack.
-While image resolution itself is a basic concept, the choice of image resolution has a strong impact on system requirements throughout the neural network stack.
+While image resolution itself is a simple concept, the choice of image resolution has a complex impact on system requirements throughout the neural network stack.
 At the most basic level, the amount of data that must be stored and read scales with image resolution.
 Model accuracy (generally) increases with image resolution.
 Due to the typical design of current convolutional model architectures, computational complexity scales roughly quadratically with image resolution.
@@ -28,7 +28,7 @@ On the opposite side, we may find that decreasing image resolution may increase 
 
 
 \paragraph{The Issue of Scale Dependence}
-From a neural network's perspective, image resolution, combined with the cropping or framing of object(s) in the image, determine the apparent scale of objects.
+From a neural network's perspective, image resolution, combined with the cropping or framing of object(s) in the image, determines the apparent scale of objects.
 At training time, a typical approach is to apply data augmentation so that objects are presented at a wide range scales and contexts (with various occlusions of the object and background).
 However, despite the effectiveness of data augmentation in improving a model's robustness to object scale, they remain sensitive to the distribution of object scales seen at training time.
 
@@ -40,8 +40,7 @@ While intermediate activations of neural networks are typically difficult to int
 
 Using this pipeline, we can measure the predictive power of neural network activations on the ranking task to understand the extent to which activations encode scale, along with attributes corresponding to other data augmentations.
 Additionally, we can weigh the relative contributions of activations from different layers to gauge which layers encode scale information the most.
-
-As we will see later, if models capture scale information, this property enables them to discern the image resolution that maximizes inference accuracy.
+As we will later see, if models capture scale information, this property enables them to discern the image resolution that maximizes inference accuracy.
 \autoref{ch:augmentations} studies the effect of scale (due to cropping) alongside other augmentations from the perspective of neural network activations.
 
 \paragraph{Enabling Performance at Different Resolutions}
@@ -62,7 +61,7 @@ Prediction strategies should balance the accuracy and compute cost of the predic
 \paragraph{Enabling Storage Efficiency at Different Resolutions}
 Exposing multiple resolutions as a hyperparameter can reduce computational complexity when low resolution inference is used, but wastes storage bandwidth if full images are loaded for every resolution.
 A similar issue also occurs when storing and serving multiple resolution versions of images, especially for large datasets such as those found for social media services.
-While the motivation for serving multiple resolution versions (images are shown in different contexts and devices vs. for different scales/model quality effects), the requirements are similar.
+While the motivation for serving multiple resolution versions (images are shown in different contexts and devices vs. for different scales/model quality effects) differs, the requirements are similar.
 By leveraging properties of frequency domain representations that are common in popular image formats, we can specialize the data layout of images to match the desired resolutions.
 Specializing the data layout requires only a single copy of each image, without redundant lossy copies for lower resoution or quality versions.
 For neural network inference, this enables reading a different relative fraction of each image's total data for inference at a per-example granularity, without modification to the downstream neural network pipeline.
