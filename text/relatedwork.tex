@@ -10,7 +10,7 @@ Beyond resolution, architecture agnostic approaches include exploiting quantizat
 \paragraph{Quantization}
 Neural network quantization can take many forms, ranging from truncation (removing bits of precision) under existing representation schemes to alternative representations.
 Regardless of the approach, the primary aim of quantization is to improve the efficiency of model inference by reducing the complexity of the hardware or the number of software operations required due to the lower bitwidth of operands.
-Another important form of savings from quantization comes in the form of the reduction in memory requirements, particularly for the intermediate activatations and weights of a model.
+Another important form of savings from quantization comes in the form of the reduction in memory requirements, particularly for the intermediate activations and weights of a model.
 
 Beyond the method by which numerical representations can be quantized, much of quantization research focuses on how quantization can be performed while minimizing the loss in model quality.
 Approaches include finetuning the model after quantization and specializing the extent of quantization at a per-channel or per-layer basis.
