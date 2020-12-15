@@ -1,22 +1,30 @@
 \paragraph{Introduction}
-Neural networks for computer vision present a tremendous challenge for systems practictioners and researchers.
-In spite of a decade of constant progress in model architectures, perhaps the most frequent descriptor paired with neural networks is their data-hungry nature for training.
-Yet, for popular models that achieve success in a given computer vision domain, the quantity of training data is eclipsed by the amount of data seen at inference time.
+Computer vision models using deep learning are becoming increasingly powerful in their ability and accuracy.
+However, their rapidly improving utility is often surpassed by their massive computational requirements.
+As a consequence of these requirements, machine learning researchers and computer architects have looked towards classical tradeoff spaces to find ideal operating points for models.
+These tradeoff spaces leverage techniques such as quantization (reducing the precision of numerical representations used by the model) and pruning (reducing the number of nonzero model weights), to varying degrees of success in improving model efficiency.
+The challenge with many methods is that approaches may either be hardware friendly (introducing little additional irregularity in execution) or model friendly (introducing few constraints on model weights), but rarely both.
+The goal of this work is to introduce an additional tradeoff space for efficient models: resolution, which has the potential to be both model and hardware friendly.
 
-The sheer amount of data and computation required to train and execute neural networks has spawned ever-increasing efforts to tame the storage and compute appetite of neural networks.
-Neural network models tax storage systems, as data for training and inference often takes the form of many relatively small files (e.g., images).
-As models now typically contain hundreds of millions of parameters and billions of floating point operations, they also tax computer architectures and their designers and users, requiring careful orchestration of memory hierachies to maximize the utilization of hardware due to the bandwidth requirements of training and inference.
 
-At a glance, neural networks depend on a tall stack of supporting technolgies to enable performance and developer productivity.
+%Neural networks for computer vision present a tremendous challenge for systems practictioners and researchers.
+%In spite of a decade of constant progress in model architectures, perhaps the most frequent descriptor paired with neural networks is their data-hungry nature for training.
+%Yet, for popular models that achieve success in a given computer vision domain, the quantity of training data is eclipsed by the amount of data seen at inference time.
+%
+%The sheer amount of data and computation required to train and execute neural networks has spawned ever-increasing efforts to tame the storage and compute appetite of neural networks.
+%Neural network models tax storage systems, as data for training and inference often takes the form of many relatively small files (e.g., images).
+%As models now typically contain hundreds of millions of parameters and billions of floating point operations, they also tax computer architectures and their designers and users, requiring careful orchestration of memory hierachies to maximize the utilization of hardware due to the bandwidth requirements of training and inference.
+
+At a glance, neural networks depend on a tall stack of supporting technologies to enable performance and developer productivity.
 Fundamentally, achieving performant model implementations depends on highly specialized (often vendor-specific) linear algebra libraries (e.g., BLAS, MKLDNN, and cuDNN), as naive implementations of operators can trail libraries by several orders of magnitude.
 Similarly, the de facto standard general purpose image training set ImageNet~\cite{russakovsky2015imagenet} comprises 1.2 million images.
 To handle enable developer productivity on large datasets while maintaining hardware utilization, deep learning frameworks such as PyTorch~\cite{paszke2019pytorch} handle tasks such as automatic differentiation, parallel data augmentation preprocessing, and model checkpointing, to name a few example of the breadth of software support required.
 Additionally, the model architectures of computer vision models are themselves highly complex arrangements of deep learning operators---the lastest architectures are often the result of human insight paired with brute-force machine optimization~\cite{tan2019efficientnet, real2019regularized, liu2018darts}.
 From just this superficial glance at the technology stack behind neural networks, we can infer that neural network pipelines for computer vision are staggeringly complex.
 However, from this complexity, a rich set of opportunities for optimization emerges.
-Peforming neural network inference touches nearly every aspect of system design and implementation, from storage (images and image formats), to computer architecture (for kernel or operator-level optimizations), with the neural network archiecture and model execution pipeline at the highest level.
+Peforming neural network inference touches nearly every aspect of system design and implementation, from storage (images and image formats), to computer architecture (for kernel or operator-level optimizations), with the neural network architecture and model execution pipeline at the highest level.
 
-Starting from the singular hyperparameter of image resolution, we show methods and opportunities for enabling efficient neural network inference at multiple levels of the system stack.
+From the singular hyperparameter of image resolution, we show methods and opportunities for enabling efficient neural network inference at multiple levels of the system stack.
 While image resolution itself is a simple concept, the choice of image resolution has a complex impact on system requirements throughout the neural network stack.
 At the most basic level, the amount of data that must be stored and read scales with image resolution.
 Model accuracy (generally) increases with image resolution.
@@ -63,7 +71,7 @@ Exposing multiple resolutions as a hyperparameter can reduce computational compl
 A similar issue also occurs when storing and serving multiple resolution versions of images, especially for large datasets such as those found for social media services.
 While the motivation for serving multiple resolution versions (images are shown in different contexts and devices vs. for different scales/model quality effects) differs, the requirements are similar.
 By leveraging properties of frequency domain representations that are common in popular image formats, we can specialize the data layout of images to match the desired resolutions.
-Specializing the data layout requires only a single copy of each image, without redundant lossy copies for lower resoution or quality versions.
+Specializing the data layout requires only a single copy of each image, without redundant lossy copies for lower resolution or quality versions.
 For neural network inference, this enables reading a different relative fraction of each image's total data for inference at a per-example granularity, without modification to the downstream neural network pipeline.
 \autoref{ch:storage} describes the methods and evaluates multi-resolution image storage via frequency domain data layouts.
 
