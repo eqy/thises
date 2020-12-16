@@ -289,7 +289,7 @@ The objective is to accurately predict the performance of a previously \emph{uns
 Additionally, peak performance prediction is useful even when the collection of fixed workloads to be optimized is fixed: an optimization system can use peak performance prediction to prioritize optimization resources between the different workloads, as workloads that are already at their predicted maximum performance can be deprioritized.
 
 \section{SeaNet Developer API}
-In this section, we present a the SeaNet modular automatic optimization pipeline aimed at tackling the first task of generating the best operator implementations using as few evaluations of a simulator or real hardware as possible.
+In this section, we present the SeaNet modular automatic optimization pipeline aimed at tackling the first task of generating the best operator implementations using as few evaluations of a simulator or real hardware as possible.
 The pipeline starts from a \emph{search space} of possible implementations for each program, with up to billions of \emph{configurations} (a point in the search space with instantiated values for all tunable implementation parameters).
 Next in the pipeline is \emph{model optimizer}, which proposes promising configurations to a \emph{cost-model} or value function, which estimates the performance of the proposed configurations.
 These performance results are filtered by a \emph{sampler} that  decides which configurations to evaluate on real hardware. This pipeline is shown with a concrete example in~\autoref{fig:sys_overview}.

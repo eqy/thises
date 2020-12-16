@@ -165,7 +165,7 @@ We characterize the impact of the issue of popular neural network architectures'
 \end{figure}
 We describe a simple way to leverage a multi-resolution enabled inference pipeline dynamically for object scales, by using two neural network models in sequence (\autoref{fig:pipeline}) such that resolution is chosen automatically.
 We refer to the first model as the \emph{scale} model, as it roughly attempts to predict the appropriate scale for neural network inference.
-We refer to the second model as the \emph{backbone} model; the backbone model performs the specified computer vision task a the chosen scale (resolution).
+We refer to the second model as the \emph{backbone} model; the backbone model performs the specified computer vision task at the chosen scale (resolution).
 While this example two model pipeline introduces an additional control flow decision of which resolution to execute, this decision is at a coarse granularity (an entire image inference), we believe that this acceptable for inference workloads--especially those that typically run at batch size 1 (e.g., on CPUs).
 
 \paragraph{Scale Model}
