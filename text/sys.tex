@@ -211,7 +211,7 @@ We introduce the SeaNet to provide an easily extensible automatic deep learning 
 %For example, Attention relies on matrix multiplication as its core primitive, and current vision models such as EfficientNet do not stray from typical vision operator shapes (e.g., 3$\times$3 convolution).
 %In order for deep learning research to be uncurbed by software limitations, performant kernels should be generated for arbitrary operator definitions and hardware platforms.
 \begin{figure}[ht]
-\includegraphics[width=\textwidth]{sys_diagrams/overview2.pdf}
+\includegraphics[width=0.5\textwidth]{sys_diagrams/overview2.pdf}
 \caption{SeaNet provides flexibility and extensibility to existing deep learning program optimization stacks.
 Researchers can use SeaNet to experiment with novel automatic optimization components for off-the-self of bespoke models. Hardware engineers and researchers can propose new search spaces of optimizations for deep learning operators. SeaNet can be used to build collections of optimized kernels for low level system libraries (e.g., cuDNN, MIOpen).}
 \end{figure}
