@@ -166,7 +166,7 @@ We characterize the impact of the issue of popular neural network architectures'
 We describe a simple way to leverage a multi-resolution enabled inference pipeline dynamically for object scales, by using two neural network models in sequence (\autoref{fig:pipeline}) such that resolution is chosen automatically.
 We refer to the first model as the \emph{scale} model, as it roughly attempts to predict the appropriate scale for neural network inference.
 We refer to the second model as the \emph{backbone} model; the backbone model performs the specified computer vision task at the chosen scale (resolution).
-While this example two model pipeline introduces an additional control flow decision of which resolution to execute, this decision is at a coarse granularity (an entire image inference), we believe that this acceptable for inference workloads--especially those that typically run at batch size 1 (e.g., on CPUs).
+While this example two model pipeline introduces an additional control flow decision of which resolution to execute, this decision is at a coarse granularity (an entire image inference), we believe that control flow at a per-example granularity acceptable for inference workloads--especially those that typically run at batch size 1 (e.g., on CPUs).
 
 \paragraph{Scale Model}
 The scale is trained with a multilabel classification objective: it aims to predict whether a trained backbone model will be accurate at a given resolution for a given image.
@@ -456,7 +456,7 @@ For lower resolution inference, we find the ideal operating point to be $168\tim
 \end{figure*}
  To highlight the flexibility of a dynamic approach to resolution compared to static approaches that perform inference at a fixed resolution, we compare the accuracy of a dynamic resolution switching approach at several different center crop ratios (25\%, 39\%, 56\%, and ~75\%)\footnote{``75\%'' corresponds to the common practice of selecting a center crop (e.g., of 224 pixels from a $256\times256$ image, or 448 pixels from a $512\times512$ image), though the true area is closer to 77\%.}.
  Note that the best static choice of resolution changes for different crop sizes, as predicted by the ``train-test resolution discrepancy~\cite{touvron2019fixing}.''
-While the choice of crop ratio is a evaluation hyperparameter, in practice it is unknown if a model is to be deployed on data from an unknown distribution of object sizes.
+While the choice of crop ratio is an evaluation hyperparameter, in practice it is unknown if a model is to be deployed on data from an unknown distribution of object sizes.
 %Additionally, choosing the resolution corresponding to the best accuracy statically is optimistic because it assumes the distribution of object sizes at test time is known.
 
 The dynamic resolution two model pipeline does not incur a significant overhead in compute complexity, as we use a lightweight, low-resolution architecture for the scale model (MobileNet v2)~\cite{sandler2018mobilenetv2}. 
