@@ -17,38 +17,38 @@ The goal of this work is to introduce an additional tradeoff space for efficient
 
 At a glance, neural networks depend on a tall stack of supporting technologies to enable performance and developer productivity.
 Fundamentally, achieving performant model implementations depends on highly specialized (often vendor-specific) linear algebra libraries (e.g., BLAS, MKLDNN, and cuDNN), as naive implementations of operators can trail libraries by several orders of magnitude.
-Similarly, the de facto standard general purpose image training set ImageNet~\cite{russakovsky2015imagenet} comprises 1.2 million images.
-To handle enable developer productivity on large datasets while maintaining hardware utilization, deep learning frameworks such as PyTorch~\cite{paszke2019pytorch} handle tasks such as automatic differentiation, parallel data augmentation preprocessing, and model checkpointing, to name a few example of the breadth of software support required.
-Additionally, the model architectures of computer vision models are themselves highly complex arrangements of deep learning operators---the lastest architectures are often the result of human insight paired with brute-force machine optimization~\cite{tan2019efficientnet, real2019regularized, liu2018darts}.
-From just this superficial glance at the technology stack behind neural networks, we can infer that neural network pipelines for computer vision are staggeringly complex.
+Similarly, the de facto standard general-purpose image training set ImageNet~\cite{russakovsky2015imagenet} comprises 1.2 million images.
+To enable developer productivity on large datasets while maintaining hardware utilization, deep learning frameworks such as PyTorch~\cite{paszke2019pytorch} handle tasks such as automatic differentiation, parallel data augmentation preprocessing, and model checkpointing, to name a few example of the breadth of software support required.
+Additionally, the model architectures of computer vision models are themselves highly complex arrangements of deep learning operators---the latest architectures are often the result of human insight paired with brute-force machine optimization~\cite{tan2019efficientnet, real2019regularized, liu2018darts}.
+This superficial glance at the technology stack behind neural network reveals that neural network pipelines for computer vision are staggeringly complex.
 However, from this complexity, a rich set of opportunities for optimization emerges.
-Peforming neural network inference touches nearly every aspect of system design and implementation, from storage (images and image formats), to computer architecture (for kernel or operator-level optimizations), with the neural network architecture and model execution pipeline at the highest level.
+Performing neural network inference touches nearly every aspect of system design and implementation, from storage (images and image formats), to computer architecture (for kernel or operator-level optimizations), with the neural network architecture and model execution pipeline at the highest level.
 
 From the singular hyperparameter of image resolution, we show methods and opportunities for enabling efficient neural network inference at multiple levels of the system stack.
-While image resolution itself is a simple concept, the choice of image resolution has a complex impact on system requirements throughout the neural network stack.
-At the most basic level, the amount of data that must be stored and read scales with image resolution.
-Model accuracy (generally) increases with image resolution.
+While image resolution itself is a simple concept, the choice of image resolution has a nuanced impact on system requirements throughout the neural network stack.
+At the basic level, the amount of data that must be stored and read scales with image resolution.
+Model accuracy generally increases with image resolution~\cite{tan2019efficientnet, touvron2019fixing}.
 Due to the typical design of current convolutional model architectures, computational complexity scales roughly quadratically with image resolution.
 
-However, as we will see, each of these relationships hold nuances that either can enable favorable tradeoffs or prevent expected efficiency gains from materializing.
+However, each of these relationships holds nuances that either can enable favorable tradeoffs or prevent expected efficiency gains from materializing.
 For example, while computational complexity may scale quadratically with image resolution, realizing computation savings in terms of wall-clock time may be difficult if reducing complexity also serves to reduce hardware utilization given a particular computer architecture and algorithm implementation.
-On the opposite side, we may find that decreasing image resolution may increase model accuracy compared to existing approaches if we carefully compensate for the change in image scale.
+On the opposite side, decreasing image resolution may increase model accuracy compared to existing approaches when carefully compensating for the change in image scale.
 
 
 \paragraph{The Issue of Scale Dependence}
 From a neural network's perspective, image resolution, combined with the cropping or framing of object(s) in the image, determines the apparent scale of objects.
-At training time, a typical approach is to apply data augmentation so that objects are presented at a wide range scales and contexts (with various occlusions of the object and background).
+At training time, a typical approach is to apply data augmentation so that objects are presented at a wide range scales and contexts (with various occlusions of the object and background)~\cite{krizhevsky2012imagenet}.
 However, despite the effectiveness of data augmentation in improving a model's robustness to object scale, they remain sensitive to the distribution of object scales seen at training time.
 
 This issue raises a fundamental question about neural network features.
 If scale is an important attribute of objects, do models explicitly capture or encode scale in their intermediate representations?
 If models indeed represent scale, then this property can potentially be leveraged to ``normalize'' the scale of objects ahead of time to improve inference performance.
 
-While intermediate activations of neural networks are typically difficult to interpret directly, we can reveal the sensitivity of activations to object scales using a model pipeline that uses neural network activations (from a pretrained model) as input and an alternative training objective intended to rank the relative scales of input examples.
+While intermediate activations of neural networks are typically difficult to interpret directly, we study the sensitivity of activations to object scales using a model pipeline that uses neural network activations (from a pretrained model) as input and an alternative training objective intended to rank the relative scales of input examples.
 
-Using this pipeline, we can measure the predictive power of neural network activations on the ranking task to understand the extent to which activations encode scale, along with attributes corresponding to other data augmentations.
-Additionally, we can weigh the relative contributions of activations from different layers to gauge which layers encode scale information the most.
-As we will later see, if models capture scale information, this property enables them to discern the image resolution that maximizes inference accuracy.
+Using this pipeline, we measure the predictive power of neural network activations on the ranking task to understand the extent to which activations encode scale, along with attributes corresponding to other data augmentations.
+Additionally, we weigh the relative contributions of activations from different layers to gauge which layers encode scale information the most.
+If models capture scale information, this property enables them to discern the image resolution that maximizes inference accuracy.
 \autoref{ch:augmentations} studies the effect of scale (due to cropping) alongside other augmentations from the perspective of neural network activations.
 
 \paragraph{Enabling Performance at Different Resolutions}
@@ -56,10 +56,10 @@ As alluded to previously, while the apparent scale of objects is modulated by th
 The relative efficiency of inference typically decreases with decreasing resolution, as hardware utilization falls and/or the share of computation that cannot be parallelized begins to dominate the total execution time.
 While losses in efficiency can be partially recovered by crafting custom kernels for every operator and resolution combination, this process quickly becomes tedious and intractable given the large number of operators present in even a single model, resolution combination.
 The difficulty in handcrafting implementations is amplified by the present diversity of hardware architectures and memory hierarchies: the optimal implementation strategy will vary widely between a CPU with main memory caches and specialized vector extensions and a GPU with a large register file and high-bandwidth scratchpad memories.
-Recent work has proposed automatic compiler optimizations that use machine-learning guided search to rapidly comb through a wide range of candidate implementations, and we build on this effort to generate efficient implementations for each resolution, studying ways to reduce the time spent during the search process.
+Recent work has proposed automatic compiler optimizations that use machine-learning guided search~\cite{chen2018tvm, chen2018learning, zheng2020ansor} to rapidly comb through a wide range of candidate implementations, and we build on this effort to generate efficient implementations for each resolution, studying ways to reduce the time spent during the search process.
 
-More concretely, the search process for generating efficient implementations can be broken into multiple phases that each have varying strategies.
-We can separate the search process into a \emph{proposal} phase that selects potentially highly performant implementations based on prior knowledge, and a \emph{prediction} phase that estimates the performance of the proposed candidate implementations.
+An alternative presentation of the search process for generating efficient implementations takes the form of multiple phases where each phase can apply varying strategies.
+A natural arrangement is a \emph{proposal} phase that selects potentially efficient implementations based on prior knowledge, and a \emph{prediction} phase that estimates the performance of the proposed candidate implementations.
 This separation enables a modular pipeline where the performance of different proposal and prediction strategies can be compared which each have distinctly important roles in the search pipeline.
 Proposal strategies must balance exploitation (choosing kernel configurations that are likely to be good) and exploration (choosing kernel configurations that are from underexplored regions of the space.
 Prediction strategies should balance the accuracy and compute cost of the prediction model: at the extreme end of compute cost, it would be cheaper to measure the performance of configuration on actual hardware than to use a prediction model.
@@ -86,3 +86,6 @@ We propose a two-model pipeline that first predicts the optimal resolution for i
 In tandem, the amount of data read from storage is calibrated to the model's preferences for image quality at each resolution, and the implementation of the model at each resolution is tuned to maximize utilization.
 \autoref{ch:e2e} provides more details on end-to-end approaches on specializing for image resolution.
 
+
+In this thesis, we propose and evaluate support for efficient multi-resolution image inference in terms of model accuracy, storage, computation, spanning image formats, compute kernel tuning, and a dynamic resolution approach that removes the need to statically choose a resolution ahead of time, finding a favorable accuracy vs. compute cost tradeoff.
+We show that specializing for resolution improves performance, increases accuracy, and reduces the amount of data read from storage. Additionally,we show that dynamic resolution approach is a viable alter-native to finetuning for a specific object scale.

@@ -12,7 +12,7 @@ In these situations, it may be useful to enforce that neural networks remain equ
 \paragraph{Solving the Scale Equivariance Problem}
 Another approach to solving the scale invariance problem is to change the region of interest that is used as input to a computer vision model dynamically, depending on the positioning and scale of an object in a frame.
 This approach would effectively be an extension of neural network models that use a version of the attention mechanism popular in natural language processing models.
-While convolution-based architectures are currently more common in computer vision, recent work has shown that with sufficient computation, attention-based architectures can also be competitive with state-of-the-art convolution approaches.
+While convolution-based architectures are currently more common in computer vision, recent work~\cite{dosovitskiy2020image} has shown that with sufficient computation, attention-based architectures can also be competitive with state-of-the-art convolution approaches.
 
 
 \paragraph{Tuning Deep Learning Kernels}
@@ -32,4 +32,5 @@ Ideally, to minimize programmer effort and maximize generalization, a ``tabula r
 \paragraph{Attention Mechanisms in Vision}
 One interesting application of attention mechanisms may be to improve model efficiency by focusing on a few relevant patches in an input image.
 This approach may also support the model in normalizing scale differences in input images, e.g., by choosing just enough patches roughly normalize object scales.
-However, a challenge of using high level information (e.g., saliency or relevance) to guide control flow in models is that a large amount of computation may be required to develop the high level features, so that by the time the decision to select relevant patches can be made, little additional computation can be saved.
+However, a challenge of using high-level information (e.g., saliency or relevance) to guide control flow in models is that a large amount of computation may be required to develop the high-level features, so that by the time the decision to select relevant patches can be made, little additional computation can be saved.
+

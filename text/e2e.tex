@@ -231,7 +231,8 @@ While the Cars dataset contains fewer images (with less than 1/100th the trainin
 The average dimensions of training images in the Cars dataset are $699\times482$ pixels while the average dimensions of images in the ImageNet dataset are $472\times405$ pixels.
 \paragraph{Calibration Procedure}
 To search for the minimal quality (SSIM threshold) that satisfies the accuracy target, we run binary search of over the SSIM interval [0.94, 1.0], and terminate the search after the step size falls below 0.0001, with the constraint that no more than 0.05\% accuracy is lost for each of the resolutions.
-We use three different train/validation splits of Cars and ImageNet (shown as the different seeds in \autoref{fig:calibration_imagenet_ssim} and \autoref{fig:calibration_cars_ssim}). generated on the training set of the respective dataset, limiting the number of images used for calibration to 10,000 (to reduce the amount of computation required).
+We use three different train/validation splits of Cars and ImageNet (shown as the different seeds in \autoref{fig:calibration_imagenet_ssim} and \autoref{fig:calibration_cars_ssim}) generated on the training set of the respective dataset.
+We limit the number of images used for calibration to 10,000 (to reduce the amount of computation required).
 We use the median SSIM threshold found by this search for each resolution in our storage evaluation.
 
 \autoref{fig:calibration_imagenet_ssim} and~ \autoref{fig:calibration_cars_ssim} show accuracy vs. the relative amount of data read (normalized to 1.0), averaged over a collection of images in the training set of ImageNet and Cars respectively.
