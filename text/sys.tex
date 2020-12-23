@@ -419,7 +419,7 @@ def predict(self, xs,...):
 \subsection{Sampler API}
 Additionally, reducing the number of proposed configurations to a feasible number that are measured on real hardware is an effective way to speed up the optimization loop.
 One observation is that implementation search spaces can contain many configurations or programs that are close both in terms of performance and in terms of configuration.
-Identifying this scenario and pruning configurations that are likely to be similar reduces the amount of hardware time needed to train an accurate cost model or find performant examples~\cite{DBLP:journals/corr/abs-1905-12799}
+Identifying this scenario and pruning configurations that are likely to be similar reduces the amount of hardware time needed to train an accurate cost model or find highly performing examples~\cite{DBLP:journals/corr/abs-1905-12799}
 A sampler takes in a collection of configuration proposals and chooses $k$ proposals to be evaluated (e.g., on real hardware or in simulation).
 A sampler only needs to implement a \texttt{sample} function, which takes the proposals, their corresponding costs (as evaluated by the cost model), and $k$ as input.
 We show an example of a sampler in listing ~\autoref{lst:sampler}.
